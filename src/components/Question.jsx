@@ -37,7 +37,7 @@ const Question = ({ data, onSelect }) => {
   return (
     <SQuestionBlock>
       <span className="question-number">{`${qitemNo}`}</span>
-      <h3>{question}</h3>
+      <h3 className="question">{question}</h3>
       <div className="answer-set">
         <div
           className={`answer ${selectedItem === "1" ? "selected" : ""}`}
@@ -64,10 +64,12 @@ const Question = ({ data, onSelect }) => {
 };
 const SQuestionBlock = styled.div`
   padding: 10px;
-  border: 1px solid black;
-  border-radius: 6px;
-  margin-bottom: 10px;
+  // border: 1px solid #f1f1f1;
+  box-shadow: 0px 0px 5px 0px #7f7fd530;
+  border-radius: 10px;
+  margin-bottom: 30px;
   position: relative;
+  background-color: white;
   .question-number {
     position: absolute;
     top: 10px;
@@ -75,7 +77,11 @@ const SQuestionBlock = styled.div`
     /* border: 1px solid; */
     padding: 2px 6px;
     border-radius: 4px;
-    background-color: gray;
+    background-color: #f1f1f1;
+    color: #8f8f8f;
+  }
+  .question {
+    font-weight: normal;
   }
   .answer-set {
     padding: 10px;
@@ -85,20 +91,26 @@ const SQuestionBlock = styled.div`
     flex: 1 1 0%;
     border-radius: 6px;
     cursor: pointer;
-    box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 20%);
+    box-shadow: 0px 0px 5px 0px #7f7fd550;
+    // border: 1px solid white;
+    box-sizing: border-box;
   }
   .answer:first-child {
     margin-right: 10px;
   }
   .selected {
-    border: 1px solid red;
+    // border: 1px solid #7f7fd5;
+    background-color: #86a8e7;
+    color: white;
+    box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 40%);
   }
   .answer-title {
     padding: 10px 0;
     margin: 0;
+    color: inherit;
   }
   .answer-detail {
-    font-size: 12px;
+    // font-size: 12px;
     padding: 0 30px 10px;
   }
 `;

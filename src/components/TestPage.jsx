@@ -3,6 +3,7 @@ import React from "react";
 import { useMemo } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import styled from "styled-components";
 import Question from "./Question";
 
 const TestPage = props => {
@@ -44,13 +45,14 @@ const TestPage = props => {
     console.log(Object.keys(answerList).length);
   };
   return (
-    <div>
+    <STestPageBlock>
       <h2>검사 진행</h2>
       {renderList.map((e, i) => (
         <Question key={i} data={e} onSelect={onSelect} />
       ))}
       {questionStep - 1 > currentStep ? (
         <button
+          className="next-button"
           onClick={onClickNext}
           disabled={(currentStep + 1) * 5 > Object.keys(answerList).length}
         >
@@ -58,14 +60,27 @@ const TestPage = props => {
         </button>
       ) : (
         <button
+          className="next-button"
           onClick={onClickResult}
           disabled={list.length > Object.keys(answerList).length}
         >
           결과보기
         </button>
       )}
-    </div>
+    </STestPageBlock>
   );
 };
+const STestPageBlock = styled.div`
+  padding: 20px 10%;
+  background-color: #7d7dcd10;
+  .next-button {
+    border: none;
+    border-radius: 4px;
+    width: 100px;
+    height: 50px;
+    background-color: #7f7fd550;
+    font-weight: bolder;
+  }
+`;
 
 export default TestPage;
