@@ -1,12 +1,6 @@
 import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
 
-const Question = ({ data }) => {
-  // const [question, setQuestion] = useState("");
-  // const [questionNumber, setQuestionNumber] = useState(0);
-  const [oneCheck, setOneCheck] = useState(false);
-  const [twoCheck, setTwoCheck] = useState(false);
+const Question = ({ data, onSelect }) => {
   const {
     answer01,
     answer02,
@@ -17,49 +11,42 @@ const Question = ({ data }) => {
     qitemNo,
     question,
   } = data;
-  useEffect(() => {
-    console.log(data);
-    // setQuestion(question);
-    // setQuestionNumber(data.qitemNo);
-    console.log(oneCheck);
-  }, [data, oneCheck]);
+
+  const onAnswerSelect = e => {
+    let question = qitemNo;
+    let answer;
+    if (e.target.parentNode.className === "answer") {
+      answer = Number(e.target.parentNode.dataset.score);
+    } else if (e.target.className === "answer") {
+      answer = Number(e.target.dataset.score);
+    }
+    onSelect(question, answer);
+  };
+
   return (
     <div>
       <span>{`${qitemNo}. `}</span>
       <span>{question}</span>
-      <div>
-        <div>
-          <label htmlFor={`${qitemNo}-1`}>
-            <input
-              type="radio"
-              checked={oneCheck}
-              id={`${qitemNo}-1`}
-              name={qitemNo}
-              onChange={() => {
-                setOneCheck(!oneCheck);
-              }}
-            />
-            {answer01}
-          </label>
+      <div className="answer">
+        <div
+          className="answer"
+          data-score={answerScore01}
+          onClick={onAnswerSelect}
+          style={{ border: "1px solid black" }}
+        >
+          <div>{answer01}</div>
+          <div>{answer03}</div>
         </div>
-        <div>
-          <label htmlFor={`${qitemNo}-2`}>
-            <input
-              type="radio"
-              checked={twoCheck}
-              id={`${qitemNo}-2`}
-              name={qitemNo}
-              onChange={() => {
-                setTwoCheck(!twoCheck);
-              }}
-            />
-            {answer02}
-          </label>
+
+        <div
+          className="answer"
+          data-score={answerScore02}
+          onClick={onAnswerSelect}
+          style={{ border: "1px solid black" }}
+        >
+          <div>{answer02}</div>
+          <div>{answer04}</div>
         </div>
-      </div>
-      <div>
-        <span>{answer03}</span>
-        <span>{answer04}</span>
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ const TestPage = props => {
   const [list, setLIst] = useState([]);
   const [questionStep, setQuestionStep] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
+  const [answerList, setAnswerList] = useState({});
 
   useEffect(() => {
     axios
@@ -17,6 +18,7 @@ const TestPage = props => {
       )
       .then(res => res.data.RESULT)
       .then(data => {
+        console.log(data);
         setLIst(data);
         setQuestionStep(Math.ceil(data.length / 5));
       });
@@ -28,18 +30,32 @@ const TestPage = props => {
 
   const onClickNext = e => {
     setCurrentStep(currentStep + 1);
-    console.log(currentStep);
+  };
+
+  const onSelect = (q, a) => {
+    setAnswerList(cur => {
+      const newObj = { ...cur };
+      newObj[q] = a;
+      return newObj;
+    });
   };
 
   return (
     <div>
       {renderList.map((e, i) => (
-        <Question key={i} data={e} />
+        <Question key={i} data={e} onSelect={onSelect} />
       ))}
       {questionStep - 1 > currentStep ? (
-        <button onClick={onClickNext}>다음</button>
+        <button
+          onClick={onClickNext}
+          disabled={(currentStep + 1) * 5 > Object.keys(answerList).length}
+        >
+          다음
+        </button>
       ) : (
-        <button>결과보기</button>
+        <button disabled={questionStep > Object.keys(answerList).length}>
+          결과보기
+        </button>
       )}
     </div>
   );
