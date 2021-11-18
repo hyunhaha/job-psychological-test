@@ -14,6 +14,10 @@ const Question = ({ data, onSelect }) => {
   } = data;
   const [selectedItem, setSelectedItem] = useState("");
 
+  useEffect(() => {
+    setSelectedItem("");
+  }, [data]);
+
   const onAnswerSelect = e => {
     let question = qitemNo;
     let answer;
