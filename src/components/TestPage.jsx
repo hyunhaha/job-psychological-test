@@ -39,9 +39,13 @@ const TestPage = props => {
       return newObj;
     });
   };
-
+  const onClickResult = () => {
+    console.log(answerList);
+    console.log(Object.keys(answerList).length);
+  };
   return (
     <div>
+      <h2>검사 진행</h2>
       {renderList.map((e, i) => (
         <Question key={i} data={e} onSelect={onSelect} />
       ))}
@@ -53,7 +57,10 @@ const TestPage = props => {
           다음
         </button>
       ) : (
-        <button disabled={questionStep > Object.keys(answerList).length}>
+        <button
+          onClick={onClickResult}
+          disabled={list.length > Object.keys(answerList).length}
+        >
           결과보기
         </button>
       )}
