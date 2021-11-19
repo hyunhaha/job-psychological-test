@@ -72,7 +72,9 @@ const TestPage = props => {
 };
 const STestPageBlock = styled.div`
   padding: 20px 10%;
-  background-color: #7d7dcd10;
+  text-align: center;
+  width: 600px;
+  margin: 0 auto;
   .next-button {
     border: none;
     border-radius: 4px;
