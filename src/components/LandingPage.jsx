@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 const LandingPage = props => {
   const [name, setName] = useState("");
-  const [sex, setSex] = useState("");
-
   const [isName, setIsName] = useState(false);
   const [nameMessage, setNameMessage] = useState("");
+
+  const [sex, setSex] = useState("");
 
   const nameRef = useRef();
 
@@ -23,9 +23,11 @@ const LandingPage = props => {
   const onChangeSex = e => {
     setSex(e.target.value);
   };
+
   const onSubmit = () => {
     console.log(name, sex);
   };
+
   return (
     <SLandingPageBlock>
       <div className="wrap">
@@ -96,16 +98,8 @@ const LandingPage = props => {
 
 const SLandingPageBlock = styled.div`
   height: 100vh;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
-  // width: 400px;
-  // padding: 20px 10%;
-
-  // padding: 0 60px;
   margin: 0 auto;
   box-sizing: border-box;
-  // background-color: #ffffff;
   .wrap {
     display: flex;
     flex-direction: row;
@@ -119,8 +113,6 @@ const SLandingPageBlock = styled.div`
   }
   .part2 {
     flex: 1 1 0%;
-    // padding: 0 10%;
-    // box-sizing: border-box;
   }
   .part2-wrap {
     width: 400px;
@@ -135,7 +127,6 @@ const SLandingPageBlock = styled.div`
     padding: 20px 0;
   }
   .form {
-    // margin: 0 auto;
   }
   .name {
     display: flex;
@@ -187,7 +178,8 @@ const SLandingPageBlock = styled.div`
   }
 `;
 const SAlert = styled.div`
-display:${props => (props.isDisplay ? "none" : "block")};
-color: #8698e7;
-font-size: 14px;:`;
+  display:${props => (props.isDisplay ? "none" : "block")};
+  color: #8698e7;
+  font-size: 14px:`;
+
 export default LandingPage;

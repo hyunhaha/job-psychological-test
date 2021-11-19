@@ -19,7 +19,6 @@ const TestPage = props => {
       )
       .then(res => res.data.RESULT)
       .then(data => {
-        console.log(data);
         setLIst(data);
         setQuestionStep(Math.ceil(data.length / 5));
       });
@@ -40,10 +39,12 @@ const TestPage = props => {
       return newObj;
     });
   };
+
   const onClickResult = () => {
     console.log(answerList);
     console.log(Object.keys(answerList).length);
   };
+
   return (
     <STestPageBlock>
       <h2>검사 진행</h2>

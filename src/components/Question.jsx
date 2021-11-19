@@ -21,13 +21,10 @@ const Question = ({ data, onSelect }) => {
   const onAnswerSelect = e => {
     let question = qitemNo;
     let answer;
-    console.log(e.target.parentNode.className);
     if (e.target.parentNode.className === "answer ") {
-      console.log(e.target.parentNode.dataset.id);
       answer = Number(e.target.parentNode.dataset.score);
       setSelectedItem(e.target.parentNode.dataset.id);
     } else if (e.target.className === "answer ") {
-      console.log(e.target.dataset.id);
       answer = Number(e.target.dataset.score);
       setSelectedItem(e.target.dataset);
     }
@@ -64,7 +61,6 @@ const Question = ({ data, onSelect }) => {
 };
 const SQuestionBlock = styled.div`
   padding: 10px;
-  // border: 1px solid #f1f1f1;
   box-shadow: 0px 0px 5px 0px #7f7fd530;
   border-radius: 10px;
   margin-bottom: 30px;
@@ -74,7 +70,6 @@ const SQuestionBlock = styled.div`
     position: absolute;
     top: 10px;
     left: 10px;
-    /* border: 1px solid; */
     padding: 2px 6px;
     border-radius: 4px;
     background-color: #f1f1f1;
@@ -92,14 +87,12 @@ const SQuestionBlock = styled.div`
     border-radius: 6px;
     cursor: pointer;
     box-shadow: 0px 0px 5px 0px #7f7fd550;
-    // border: 1px solid white;
     box-sizing: border-box;
   }
   .answer:first-child {
     margin-right: 10px;
   }
   .selected {
-    // border: 1px solid #7f7fd5;
     background-color: #86a8e7;
     color: white;
     box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 40%);
@@ -110,7 +103,6 @@ const SQuestionBlock = styled.div`
     color: inherit;
   }
   .answer-detail {
-    // font-size: 12px;
     padding: 0 30px 10px;
   }
 `;
