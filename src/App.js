@@ -1,7 +1,7 @@
 
 import { Routes, Route, Link } from 'react-router-dom';
 import './App.css';
-import LandingPage from './components/LandingPage';
+import LandingPage from './components/LandingPage/LandingPage';
 import IntroPage from './components/IntroPage';
 import TestPage from './components/TestPage';
 import TestCompletedPage from './components/TestCompletedPage';
