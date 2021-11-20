@@ -1,7 +1,10 @@
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 
-const UserForm = props => {
+const UserForm = ({ getUserNameSex }) => {
+  const navigator = useNavigate();
+
   const [name, setName] = useState("");
   const [isName, setIsName] = useState(false);
   const [nameMessage, setNameMessage] = useState("이름을 입력하세요");
@@ -26,8 +29,10 @@ const UserForm = props => {
 
   const onclickStart = e => {
     e.preventDefault();
-    console.log(name, sex);
+    getUserNameSex(name, sex);
+    navigator("/intro");
   };
+
   return (
     <SUserForm>
       <h4 className="title">검사를 위해 정보 입력해주세요</h4>
@@ -148,6 +153,9 @@ const SUserForm = styled.div`
     height: 30px;
     border-radius: 10px;
     background-color: #7f7fd550;
+  }
+  .start-button:hover {
+    cursor: pointer;
   }
 `;
 const SAlert = styled.div`

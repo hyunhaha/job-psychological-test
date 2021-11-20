@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import Question from "./Question";
 
-const TestPage = props => {
+const TestPage = ({ getUserAnswer }) => {
   const [list, setLIst] = useState([]);
   const [questionStep, setQuestionStep] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
@@ -43,6 +43,15 @@ const TestPage = props => {
   const onClickResult = () => {
     console.log(answerList);
     console.log(Object.keys(answerList).length);
+    console.log(
+      Object.entries(answerList)
+        .map(([key, value]) => `B${key}=${value}`)
+        .join(" ")
+    );
+    const answerString = Object.entries(answerList)
+      .map(([key, value]) => `B${key}=${value}`)
+      .join(" ");
+    getUserAnswer(answerString);
   };
 
   return (
@@ -78,7 +87,7 @@ const STestPageBlock = styled.div`
   margin: 0 auto;
   .next-button {
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     width: 100px;
     height: 50px;
     background-color: #7f7fd550;
