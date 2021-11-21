@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import styled from "styled-components";
 import Question from "./Question";
 
 const IntroPage = props => {
@@ -26,22 +27,44 @@ const IntroPage = props => {
   };
 
   return (
-    <div>
+    <SIntroPageBlock>
       <h1>검사예시</h1>
       <div>
-        <p>
+        <p className="description-item">
           직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에 표시하세요.
         </p>
-        <p>
+        <p className="description-item">
           가치의 뜻을 잘 모르겠다면 문항 아래에 있는 가치의 설명을 확인해보세요.
         </p>
       </div>
       <Question data={data} onSelect={onSelect} />
-      <button onClick={onClickTestStart} disabled={answer === 0}>
+      <button
+        className="next-button"
+        onClick={onClickTestStart}
+        disabled={answer === 0}
+      >
         검사 시작하기
       </button>
-    </div>
+    </SIntroPageBlock>
   );
 };
-
+const SIntroPageBlock = styled.div`
+  height: 100vh;
+  padding: 20px 10%;
+  text-align: center;
+  width: 600px;
+  margin: 0 auto;
+  .description-item {
+    margin: 0;
+    padding-bottom: 10px;
+  }
+  .next-button {
+    border: none;
+    border-radius: 10px;
+    width: 100px;
+    height: 50px;
+    background-color: #7f7fd550;
+    font-weight: bolder;
+  }
+`;
 export default IntroPage;
