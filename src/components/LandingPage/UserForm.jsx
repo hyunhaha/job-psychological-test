@@ -58,7 +58,7 @@ const UserForm = ({ getUserNameSex }) => {
                 type="radio"
                 id="female"
                 name="sex"
-                value="F"
+                value={100324}
                 onChange={onChangeSex}
               />
               <label htmlFor="female">여자</label>
@@ -68,7 +68,7 @@ const UserForm = ({ getUserNameSex }) => {
                 type="radio"
                 id="male"
                 name="sex"
-                value="M"
+                value={100323}
                 onChange={onChangeSex}
               />
               <label htmlFor="male">남자</label>

@@ -41,13 +41,6 @@ const TestPage = ({ getUserAnswer }) => {
   };
 
   const onClickResult = () => {
-    console.log(answerList);
-    console.log(Object.keys(answerList).length);
-    console.log(
-      Object.entries(answerList)
-        .map(([key, value]) => `B${key}=${value}`)
-        .join(" ")
-    );
     const answerString = Object.entries(answerList)
       .map(([key, value]) => `B${key}=${value}`)
       .join(" ");
@@ -56,7 +49,7 @@ const TestPage = ({ getUserAnswer }) => {
 
   return (
     <STestPageBlock>
-      <h2>검사 진행</h2>
+      {/* <h2>검사 진행</h2> */}
       {renderList.map((e, i) => (
         <Question key={i} data={e} onSelect={onSelect} />
       ))}
@@ -77,6 +70,15 @@ const TestPage = ({ getUserAnswer }) => {
           결과보기
         </button>
       )}
+      <button
+        onClick={() => {
+          getUserAnswer(
+            "B1=1 B2=3 B3=5 B4=7 B5=9 B6=11 B7=13 B8=15 B9=17 B10=19 B11=21 B12=23 B13=25 B14=27 B15=29 B16=31 B17=33 B18=35 B19=37 B20=39 B21=41 B22=43 B23=45 B24=47 B25=49 B26=51 B27=53 B28=55"
+          );
+        }}
+      >
+        test button
+      </button>
     </STestPageBlock>
   );
 };
