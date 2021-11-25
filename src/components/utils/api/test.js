@@ -2,7 +2,7 @@ import axios from 'axios';
 const baseURL = 'http://www.career.go.kr/inspct/openapi/test';
 const apikey = "5037c661501070d53c880f0f17d6f7fa"
 const api = {
-  submitTestAnswer: async (name, gender, startDtm, answers) => {
+  submitTestAnswer: async ({ name, gender, startDtm, answers }) => {
     console.log(name, gender, startDtm, answers)
     let data = JSON.stringify({
       apikey: apikey,
@@ -10,7 +10,7 @@ const api = {
       trgetSe: "100209",
       name,
       gender,
-      startDtm,
+      startDtm: startDtm.getTime(),
       answers,
     });
 
@@ -42,7 +42,7 @@ const api = {
     throw new Error(res?.data?.ERROR_REASON || "");
   },
 
-  getMatchJobs: async (no1, no2) => {
+  getMatchEduLevels: async (no1, no2) => {
     const res = await axios.get(`https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${no1}&no2=${no2}`)
     if (Array.isArray(res?.data)) {
       return res.data;
@@ -50,7 +50,7 @@ const api = {
     throw new Error(res?.data?.ERROR_REASON || "");
   },
 
-  getMatchMajos: async (no1, no2) => {
+  getMatchMajors: async (no1, no2) => {
     const res = await axios.get(`https://inspct.career.go.kr/inspct/api/psycho/value/majors?no1=${no1}&no2=${no2}`)
     if (Array.isArray(res?.data)) {
       return res.data;
