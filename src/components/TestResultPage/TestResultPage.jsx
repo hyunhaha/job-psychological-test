@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import JobTable from "./JobTable";
 import UserInfoTable from "./UserInfoTable";
 import TestResultChart from "./TestResultChart";
 import api from "../utils/api/test";
 
-const TestResultPage = ({ userInfo }) => {
+const TestResultPage = ({ userInfo, resetTest }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [report, setReport] = useState({});
   const [matchEduLevel, setMatchEduLevel] = useState([]);
   const [matchMajors, setMatchMajors] = useState([]);
@@ -98,6 +99,10 @@ const TestResultPage = ({ userInfo }) => {
     6: "의학",
     7: "예체능",
   };
+  const gotoStart = () => {
+    resetTest();
+    navigate("/");
+  };
   return (
     <div>
       <h1>직업가치관검사 결과표</h1>
@@ -114,6 +119,7 @@ const TestResultPage = ({ userInfo }) => {
 
       <JobTable partNames={educationLevelNames} info={matchEduLevel} />
       <JobTable partNames={majorNames} info={matchMajors} />
+      <button onClick={gotoStart}>테스트 다시하기</button>
     </div>
   );
 };

@@ -38,7 +38,11 @@ function App() {
         navigate('/completed', { state: { seq } })
       })
   }
+  const resetTest = () => {
+    console.log('reset')
+    setUserInfo({});
 
+  }
   return (
     <div className="App">
       <Link to='/'>LandingPage</Link>
@@ -51,7 +55,7 @@ function App() {
         <Route path='/intro' element={<IntroPage />} />
         <Route path='/test' element={<TestPage getUserAnswer={getUserAnswer} />} />
         <Route path='/completed' element={<TestCompletedPage userName={userInfo.name} />} />
-        <Route path='/result' element={<TestResultPage userInfo={userInfo} />} />
+        <Route path='/result' element={<TestResultPage userInfo={userInfo} resetTest={resetTest} />} />
       </Routes>
 
     </div>
