@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import ProgressBar from "./ProgressBar";
 import Question from "./Question";
 
 const IntroPage = props => {
@@ -28,10 +29,14 @@ const IntroPage = props => {
   const onClickTestStart = e => {
     navigator("/test");
   };
-
+  const progress = useMemo(() => {
+    if (answer !== 0) return 100;
+    else return 0;
+  }, [answer]);
   return (
     <SIntroPageBlock>
       <h1>검사예시</h1>
+      <ProgressBar progress={progress} />
       <div>
         <p className="description-item">
           직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에 표시하세요.

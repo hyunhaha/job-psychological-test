@@ -4,10 +4,12 @@ import { useMemo } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import styled from "styled-components";
+import { useTestState, useTestDispatch } from "../provider/testProvider";
+import ProgressBar from "./ProgressBar";
 import Question from "./Question";
 
-const useClick = initialStep => {
-  const [currentStep, setCurrentStep] = useState(initialStep);
+const useClick = () => {
+  const [currentStep, setCurrentStep] = useState(0);
   const onClickNext = () => {
     setCurrentStep(currentStep + 1);
   };
@@ -21,10 +23,15 @@ const useClick = initialStep => {
 };
 
 const TestPage = ({ getUserAnswer }) => {
+  const state = useTestState();
+  const dispatch = useTestDispatch();
+  useEffect(() => {
+    console.log(state);
+  });
   const [list, setLIst] = useState([]);
   const [questionStep, setQuestionStep] = useState(0);
 
-  const [answerList, setAnswerList] = useState({});
+  const [answerObj, setAnswerObj] = useState({});
   const [currentStep, onClickNext, onClickPrev] = useClick(0);
 
   // const [currentStep, setCurrentStep] = useState(0);
@@ -35,24 +42,27 @@ const TestPage = ({ getUserAnswer }) => {
       )
       .then(res => res.data.RESULT)
       .then(data => {
+        dispatch({ type: "SET_QUESTIONS", data: data });
         setLIst(data);
         setQuestionStep(Math.ceil(data.length / 5));
       });
   }, []);
-
+  const UsesrAnswerObjToArr = useMemo(() => {
+    return Object.entries(answerObj);
+  }, [answerObj]);
   const renderList = useMemo(() => {
     return list.slice(currentStep * 5, currentStep * 5 + 5);
   }, [currentStep, list]);
 
   const renderAnswerList = useMemo(() => {
-    const getAnswerList = Object.entries(answerList).slice(
+    const getAnswerList = UsesrAnswerObjToArr.slice(
       currentStep * 5,
       currentStep * 5 + 5
     );
     const arr = Array(5).fill(null);
     getAnswerList.forEach(e => (arr[e[0] - 1 - currentStep * 5] = e[1][1]));
     return arr;
-  }, [currentStep, answerList]);
+  }, [currentStep, UsesrAnswerObjToArr]);
 
   // const onClickNext = e => {
   //   setCurrentStep(currentStep + 1);
@@ -70,7 +80,7 @@ const TestPage = ({ getUserAnswer }) => {
 
   const onSelect = (questionNumber, answerScore, selectedAnswerNumber) => {
     console.log(questionNumber, answerScore, selectedAnswerNumber);
-    setAnswerList(cur => {
+    setAnswerObj(cur => {
       const newObj = { ...cur };
       newObj[questionNumber] = [answerScore, selectedAnswerNumber];
       return newObj;
@@ -78,15 +88,23 @@ const TestPage = ({ getUserAnswer }) => {
   };
 
   const onClickResult = () => {
-    const answerString = Object.entries(answerList)
-      .map(([key, value]) => `B${key}=${value[0]}`)
-      .join(" ");
+    const answerString = UsesrAnswerObjToArr.map(
+      ([key, value]) => `B${key}=${value[0]}`
+    ).join(" ");
     getUserAnswer(answerString);
   };
+
+  const progress = useMemo(() => {
+    console.log(UsesrAnswerObjToArr);
+    if (UsesrAnswerObjToArr.length > 0) {
+      return Math.ceil((UsesrAnswerObjToArr.length / list.length) * 100);
+    } else return 0;
+  }, [list, UsesrAnswerObjToArr]);
 
   return (
     <STestPageBlock>
       {/* <h2>검사 진행</h2> */}
+      <ProgressBar progress={progress} />
       {renderList.map((e, i) => (
         <Question
           key={i}
@@ -104,7 +122,7 @@ const TestPage = ({ getUserAnswer }) => {
         <button
           className="next-button"
           onClick={onClickNext}
-          disabled={(currentStep + 1) * 5 > Object.keys(answerList).length}
+          disabled={(currentStep + 1) * 5 > Object.keys(answerObj).length}
         >
           다음
         </button>
@@ -112,7 +130,7 @@ const TestPage = ({ getUserAnswer }) => {
         <button
           className="next-button"
           onClick={onClickResult}
-          disabled={list.length > Object.keys(answerList).length}
+          disabled={list.length > Object.keys(answerObj).length}
         >
           결과보기
         </button>
