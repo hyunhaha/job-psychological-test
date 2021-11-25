@@ -1,7 +1,8 @@
+import { render } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Question = ({ data, onSelect }) => {
+const Question = ({ data, onSelect, renderAnswer }) => {
   const {
     answer01,
     answer02,
@@ -14,21 +15,26 @@ const Question = ({ data, onSelect }) => {
   } = data;
   const [selectedItem, setSelectedItem] = useState("");
 
-  useEffect(() => {
-    setSelectedItem("");
-  }, [data]);
+  // useEffect(() => {
+  //   setSelectedItem("");
+  // }, [data]);
+  // useEffect(() => {
+  //   console.log(renderAnswer);
+  // }, [renderAnswer]);
 
-  const onAnswerSelect = e => {
-    let question = qitemNo;
-    let answer;
-    if (e.target.parentNode.className === "answer ") {
-      answer = Number(e.target.parentNode.dataset.score);
-      setSelectedItem(e.target.parentNode.dataset.id);
-    } else if (e.target.className === "answer ") {
-      answer = Number(e.target.dataset.score);
-      setSelectedItem(e.target.dataset);
+  useEffect(() => {
+    // console.log(renderAnswer);
+    if (renderAnswer) {
+      setSelectedItem(renderAnswer);
+    } else {
+      setSelectedItem("");
     }
-    onSelect(question, answer);
+  }, [data, renderAnswer]);
+
+  const onAnswerSelect = (selectedItem, answerScore) => {
+    let questionNumber = qitemNo;
+    setSelectedItem(selectedItem);
+    onSelect(questionNumber, Number(answerScore), selectedItem);
   };
 
   return (
@@ -37,20 +43,24 @@ const Question = ({ data, onSelect }) => {
       <h3 className="question">{question}</h3>
       <div className="answer-set">
         <div
-          className={`answer ${selectedItem === "1" ? "selected" : ""}`}
+          className={`answer ${selectedItem === 1 ? "selected" : ""}`}
           data-id="1"
           data-score={answerScore01}
-          onClick={onAnswerSelect}
+          onClick={() => {
+            onAnswerSelect(1, answerScore01);
+          }}
         >
           <h4 className="answer-title">{answer01}</h4>
           <div className="answer-detail">{answer03}</div>
         </div>
 
         <div
-          className={`answer ${selectedItem === "2" ? "selected" : ""}`}
+          className={`answer ${selectedItem === 2 ? "selected" : ""}`}
           data-id="2"
           data-score={answerScore02}
-          onClick={onAnswerSelect}
+          onClick={() => {
+            onAnswerSelect(2, answerScore02);
+          }}
         >
           <h4 className="answer-title">{answer02}</h4>
           <div className="answer-detail">{answer04}</div>

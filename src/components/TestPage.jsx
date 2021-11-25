@@ -6,12 +6,28 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import Question from "./Question";
 
+const useClick = initialStep => {
+  const [currentStep, setCurrentStep] = useState(initialStep);
+  const onClickNext = () => {
+    setCurrentStep(currentStep + 1);
+  };
+  const onClickPrev = () => {
+    setCurrentStep(cur => {
+      if (cur > 0) return cur - 1;
+      else return cur;
+    });
+  };
+  return [currentStep, onClickNext, onClickPrev];
+};
+
 const TestPage = ({ getUserAnswer }) => {
   const [list, setLIst] = useState([]);
   const [questionStep, setQuestionStep] = useState(0);
-  const [currentStep, setCurrentStep] = useState(0);
-  const [answerList, setAnswerList] = useState({});
 
+  const [answerList, setAnswerList] = useState({});
+  const [currentStep, onClickNext, onClickPrev] = useClick(0);
+
+  // const [currentStep, setCurrentStep] = useState(0);
   useEffect(() => {
     axios
       .get(
@@ -28,21 +44,42 @@ const TestPage = ({ getUserAnswer }) => {
     return list.slice(currentStep * 5, currentStep * 5 + 5);
   }, [currentStep, list]);
 
-  const onClickNext = e => {
-    setCurrentStep(currentStep + 1);
-  };
+  const renderAnswerList = useMemo(() => {
+    const getAnswerList = Object.entries(answerList).slice(
+      currentStep * 5,
+      currentStep * 5 + 5
+    );
+    const arr = Array(5).fill(null);
+    getAnswerList.forEach(e => (arr[e[0] - 1 - currentStep * 5] = e[1][1]));
+    return arr;
+  }, [currentStep, answerList]);
 
-  const onSelect = (q, a) => {
+  // const onClickNext = e => {
+  //   setCurrentStep(currentStep + 1);
+  // };
+  // const onClickPrev = e => {
+  //   console.log(currentStep);
+  //   setCurrentStep(cur => {
+  //     if (cur > 0) {
+  //       return cur - 1;
+  //     } else {
+  //       return cur;
+  //     }
+  //   });
+  // };
+
+  const onSelect = (questionNumber, answerScore, selectedAnswerNumber) => {
+    console.log(questionNumber, answerScore, selectedAnswerNumber);
     setAnswerList(cur => {
       const newObj = { ...cur };
-      newObj[q] = a;
+      newObj[questionNumber] = [answerScore, selectedAnswerNumber];
       return newObj;
     });
   };
 
   const onClickResult = () => {
     const answerString = Object.entries(answerList)
-      .map(([key, value]) => `B${key}=${value}`)
+      .map(([key, value]) => `B${key}=${value[0]}`)
       .join(" ");
     getUserAnswer(answerString);
   };
@@ -51,8 +88,18 @@ const TestPage = ({ getUserAnswer }) => {
     <STestPageBlock>
       {/* <h2>검사 진행</h2> */}
       {renderList.map((e, i) => (
-        <Question key={i} data={e} onSelect={onSelect} />
+        <Question
+          key={i}
+          data={e}
+          renderAnswer={renderAnswerList[i]}
+          onSelect={onSelect}
+        />
       ))}
+      {currentStep > 0 && (
+        <button className="next-button" onClick={onClickPrev}>
+          이전
+        </button>
+      )}
       {questionStep - 1 > currentStep ? (
         <button
           className="next-button"
