@@ -1,9 +1,9 @@
-import axios from "axios";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import styled from "styled-components";
-import Button from "./Button";
-import api from "./utils/api/test";
+import Button from "../Button";
+import TestResultSummary from "./TestResultSummary";
+import api from "../utils/api/test";
 
 const TestCompletedPage = ({ userName }) => {
   const location = useLocation();
@@ -11,16 +11,7 @@ const TestCompletedPage = ({ userName }) => {
   const [report, setReport] = useState({});
   const [matchJobs, setMatchJobs] = useState([]);
   const [matchMajors, setMatchMajors] = useState([]);
-  const part = [
-    "능력발휘",
-    "자율성",
-    "보수",
-    "안정성",
-    "사회적 안정",
-    "사회봉사",
-    "자기계발",
-    "창의성",
-  ];
+
   useEffect(() => {
     if (location.state) {
       api.getTestResult(location.state.seq).then(res => {
@@ -94,18 +85,12 @@ const TestCompletedPage = ({ userName }) => {
           생각하는지를 알려주고, 중요 가치를 충족시켜줄 수 있는 직업에 대해
           생각해 볼 기회를 제공합니다.
         </p>
-        <SResult>
-          <SHighlight>{userName ? userName : "사용자"}</SHighlight>님는{" "}
-          <SHighlight>
-            {sortedResultScore.length !== 0 && part[sortedResultScore[0].key]}
-          </SHighlight>
-          을 중요시 여기는 성향이므로
-        </SResult>
-        <SResult>
-          <SHighlight>{matchJobs[0] && matchJobs[0][1]}</SHighlight> 또는{" "}
-          <SHighlight>{matchJobs[0] && matchJobs[1][1]}</SHighlight>에
-          적합합니다.
-        </SResult>
+        <TestResultSummary
+          userName={userName}
+          sortedResultScore={sortedResultScore}
+          matchJobs1={matchJobs[0] && matchJobs[0][1]}
+          matchJobs2={matchJobs[1] && matchJobs[1][1]}
+        />
         <Button disabled={false} onClick={onClickResult}>
           결과보기
         </Button>
@@ -124,13 +109,4 @@ const STestCompletedBlock = styled.div`
   align-items: center;
 `;
 
-const SResult = styled.p`
-  margin: 0;
-  font-size: 24px;
-  margin-bottom: 1rem;
-`;
-
-const SHighlight = styled.span`
-  font-weight: bold;
-`;
 export default TestCompletedPage;
