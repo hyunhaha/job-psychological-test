@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import styled from "styled-components";
+import Button from "./Button";
 import api from "./utils/api/test";
 
 const TestCompletedPage = ({ userName }) => {
@@ -84,7 +86,7 @@ const TestCompletedPage = ({ userName }) => {
   };
 
   return (
-    <div>
+    <STestCompletedBlock>
       <h1>검사가 완료되었습니다</h1>
       <p>
         검사결과는 여러분이 직업을 선택할 때 상대적으로 어떠한 가치를 중요하게
@@ -97,9 +99,17 @@ const TestCompletedPage = ({ userName }) => {
         중요시 여기는 성향이므로 {matchJobs[0] && matchJobs[0][1]} 또는{" "}
         {matchJobs[0] && matchJobs[1][1]}에 적합합니다.
       </h2>
-      <button onClick={onClickResult}>결과보기</button>
-    </div>
+      <Button disabled={false} onClick={onClickResult}>
+        결과보기
+      </Button>
+    </STestCompletedBlock>
   );
 };
-
+const STestCompletedBlock = styled.div`
+  padding: 20px 10%;
+  text-align: center;
+  width: 600px;
+  margin: 0 auto;
+  height: 100vh;
+`;
 export default TestCompletedPage;

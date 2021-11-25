@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import Button from "./Button";
 import ProgressBar from "./ProgressBar";
 import Question from "./Question";
 
@@ -46,13 +47,13 @@ const IntroPage = props => {
         </p>
       </div>
       <Question data={data} onSelect={onSelect} />
-      <button
+      <Button
         className="next-button"
         onClick={onClickTestStart}
         disabled={answer === 0}
       >
         검사 시작하기
-      </button>
+      </Button>
     </SIntroPageBlock>
   );
 };

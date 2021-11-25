@@ -1,7 +1,20 @@
 import axios from 'axios';
+
 const baseURL = 'http://www.career.go.kr/inspct/openapi/test';
-const apikey = "5037c661501070d53c880f0f17d6f7fa"
+const apikey = "5037c661501070d53c880f0f17d6f7fa";
+
+
 const api = {
+  getTestQuestion: async (questionNumber) => {
+    const res = await axios
+      .get(
+        `${baseURL}/questions?apikey=${apikey}&q=${questionNumber}`
+      )
+    if (res?.data.RESULT) {
+      return res.data.RESULT;
+    }
+    throw new Error(res?.data?.ERROR_REASON || "");
+  },
   submitTestAnswer: async ({ name, gender, startDtm, answers }) => {
     console.log(name, gender, startDtm, answers)
     let data = JSON.stringify({
