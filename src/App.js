@@ -26,6 +26,9 @@ function App() {
         const seq = res.url.split('seq=').pop();
         navigate('/completed', { state: { seq } })
       })
+      .catch(err => {
+        console.log(err)
+      })
   }
   const resetTest = () => {
     setUserInfo({});

@@ -17,9 +17,12 @@ const TestResultPage = ({ userInfo, resetTest }) => {
 
   useEffect(() => {
     if (location.state) {
-      api.getTestResult(location.state.seq).then(res => {
-        setReport(res);
-      });
+      api
+        .getTestResult(location.state.seq)
+        .then(res => {
+          setReport(res);
+        })
+        .catch(err => console.log(err));
     }
   }, [location]);
 
@@ -60,12 +63,18 @@ const TestResultPage = ({ userInfo, resetTest }) => {
     if (sortedResultScore.length !== 0) {
       const no1 = sortedResultScore[0].key;
       const no2 = sortedResultScore[1].key;
-      await api.getMatchEduLevels(no1, no2).then(res => {
-        setMatchEduLevel(res);
-      });
-      await api.getMatchMajors(no1, no2).then(res => {
-        setMatchMajors(res);
-      });
+      await api
+        .getMatchEduLevels(no1, no2)
+        .then(res => {
+          setMatchEduLevel(res);
+        })
+        .catch(err => console.log(err));
+      await api
+        .getMatchMajors(no1, no2)
+        .then(res => {
+          setMatchMajors(res);
+        })
+        .catch(err => console.log(err));
     }
   }, [sortedResultScore]);
 

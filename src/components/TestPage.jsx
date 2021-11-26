@@ -46,11 +46,14 @@ const TestPage = ({ getUserAnswer }) => {
   const [currentStep, onClickNext, onClickPrev] = useClick(0);
 
   useEffect(() => {
-    api.getTestQuestion(6).then(data => {
-      // dispatch({ type: "SET_QUESTIONS", data: data });
-      setLIst(data);
-      setQuestionStep(Math.ceil(data.length / 5));
-    });
+    api
+      .getTestQuestion(6)
+      .then(data => {
+        // dispatch({ type: "SET_QUESTIONS", data: data });
+        setLIst(data);
+        setQuestionStep(Math.ceil(data.length / 5));
+      })
+      .catch(err => console.log(err));
   }, [dispatch]);
 
   const UsesrAnswerObjToArr = useMemo(() => {
