@@ -47,11 +47,11 @@ function App() {
   }
   return (
     <div className="App">
-      <Link to='/'>LandingPage</Link>
+      {/* <Link to='/'>LandingPage</Link>
       <Link to='/intro'>IntroPage</Link>
       <Link to='/test'>TestPage</Link>
       <Link to='/completed'>TestCompletedPage</Link>
-      <Link to='/result'>TestResultPage</Link>
+      <Link to='/result'>TestResultPage</Link> */}
       <Routes >
         <Route path="/" element={<LandingPage getStartUserInfo={getStartUserInfo} />} />
         <Route path='/intro' element={<IntroPage />} />

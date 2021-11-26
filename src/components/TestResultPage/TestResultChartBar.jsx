@@ -35,7 +35,7 @@ const SBar = styled.div`
   position: relative;
   width: 80%;
   height: ${props => (props.score / props.maxScore) * 80}%;
-  background-color: #86a8e7;
+  background-color: #86a8e770;
 `;
 
 const SValue = styled.div`
@@ -51,6 +51,7 @@ const SAbility = styled.div`
   top: 100%;
   width: 100%;
   padding-top: 8px;
+  font-size: 12px;
 `;
 
 export default TestResultChartBar;
