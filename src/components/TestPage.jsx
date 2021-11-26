@@ -2,6 +2,7 @@ import React from "react";
 import { useMemo } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { useTestState, useTestDispatch } from "../provider/testProvider";
 import Button from "./Button";
@@ -29,28 +30,23 @@ const useClick = initial => {
       else return cur;
     });
   };
-  const onClickResult = (arr, getUserAnswer) => {
-    const answerString = arr
-      .map(([key, value]) => `B${key}=${value[0]}`)
-      .join(" ");
-    getUserAnswer(answerString);
-  };
-  return [currentStep, onClickNext, onClickPrev, onClickResult];
+
+  return [currentStep, onClickNext, onClickPrev];
 };
 
-const TestPage = ({ getUserAnswer }) => {
+const TestPage = () => {
   const state = useTestState();
   const dispatch = useTestDispatch();
 
-  // useEffect(() => {
-  //   console.log(state);
-  // });
-
+  useEffect(() => {
+    console.log(state);
+  });
+  const navigate = useNavigate();
   const [list, setLIst] = useState([]);
   const [questionStep, setQuestionStep] = useState(0);
 
   const [answerObj, setAnswerObj] = useState({});
-  const [currentStep, onClickNext, onClickPrev, onClickResult] = useClick(0);
+  const [currentStep, onClickNext, onClickPrev] = useClick(0);
 
   useEffect(() => {
     api
@@ -62,14 +58,21 @@ const TestPage = ({ getUserAnswer }) => {
       })
       .catch(err => console.log(err));
   }, [dispatch]);
+  const renderList = useMemo(() => {
+    return list.slice(currentStep * 5, currentStep * 5 + 5);
+  }, [currentStep, list]);
+
+  const onSelect = (questionNumber, answerScore, selectedAnswerNumber) => {
+    setAnswerObj(cur => {
+      const newObj = { ...cur };
+      newObj[questionNumber] = [answerScore, selectedAnswerNumber];
+      return newObj;
+    });
+  };
 
   const UsesrAnswerObjToArr = useMemo(() => {
     return Object.entries(answerObj);
   }, [answerObj]);
-
-  const renderList = useMemo(() => {
-    return list.slice(currentStep * 5, currentStep * 5 + 5);
-  }, [currentStep, list]);
 
   const renderAnswerList = useMemo(() => {
     const getAnswerList = UsesrAnswerObjToArr.slice(
@@ -81,14 +84,50 @@ const TestPage = ({ getUserAnswer }) => {
     return arr;
   }, [currentStep, UsesrAnswerObjToArr]);
 
-  const onSelect = (questionNumber, answerScore, selectedAnswerNumber) => {
-    setAnswerObj(cur => {
-      const newObj = { ...cur };
-      newObj[questionNumber] = [answerScore, selectedAnswerNumber];
-      return newObj;
-    });
-  };
+  const answerString = useMemo(() => {
+    return UsesrAnswerObjToArr.map(
+      ([key, value]) => `B${key}=${value[0]}`
+    ).join(" ");
+  }, [UsesrAnswerObjToArr]);
 
+  const onClickResult = async () => {
+    // const answerString = UsesrAnswerObjToArr.map(
+    //   ([key, value]) => `B${key}=${value[0]}`
+    // ).join(" ");
+    console.log(state.user);
+    api
+      .submitTestAnswer({
+        ...state.user,
+        answers: answerString,
+      })
+      .then(res => {
+        const seq = res.url.split("seq=").pop();
+        console.log(seq);
+        dispatch({ type: "SET_SEQ", data: seq });
+        // dispatch({ type: "SET_USER", data: { name, gender, startDtm } });
+        navigate("/completed", { state: { seq } });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  const testclick = async () => {
+    await api
+      .submitTestAnswer({
+        ...state.user,
+        startDtm: state.date,
+        answers:
+          "B1=1 B2=3 B3=5 B4=7 B5=9 B6=11 B7=13 B8=15 B9=17 B10=19 B11=21 B12=23 B13=25 B14=27 B15=29 B16=31 B17=33 B18=35 B19=37 B20=39 B21=41 B22=43 B23=45 B24=47 B25=49 B26=51 B27=53 B28=55",
+      })
+      .then(res => {
+        const seq = res.url.split("seq=").pop();
+        dispatch({ type: "SET_SEQ", data: seq });
+        navigate("/completed", { state: { seq } });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
   const progress = useMemo(() => {
     if (UsesrAnswerObjToArr.length > 0) {
       return Math.ceil((UsesrAnswerObjToArr.length / list.length) * 100);
@@ -118,23 +157,13 @@ const TestPage = ({ getUserAnswer }) => {
           </Button>
         ) : (
           <Button
-            onClick={() => {
-              onClickResult(UsesrAnswerObjToArr, getUserAnswer);
-            }}
+            onClick={onClickResult}
             disabled={list.length > Object.keys(answerObj).length}
           >
             결과보기
           </Button>
         )}
-        <Button
-          onClick={() => {
-            getUserAnswer(
-              "B1=1 B2=3 B3=5 B4=7 B5=9 B6=11 B7=13 B8=15 B9=17 B10=19 B11=21 B12=23 B13=25 B14=27 B15=29 B16=31 B17=33 B18=35 B19=37 B20=39 B21=41 B22=43 B23=45 B24=47 B25=49 B26=51 B27=53 B28=55"
-            );
-          }}
-        >
-          test button
-        </Button>
+        <Button onClick={testclick}>test button</Button>
       </SWrap>
     </STestPageBlock>
   );

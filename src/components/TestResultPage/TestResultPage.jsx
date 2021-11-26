@@ -7,6 +7,7 @@ import api from "../utils/api/test";
 import styled from "styled-components";
 import Button from "../Button";
 import { educationLevelNames, genders, majorNames } from "../utils/contents";
+import { useTestDispatch, useTestState } from "../../provider/testProvider";
 
 const TestResultPage = ({ userInfo, resetTest }) => {
   const location = useLocation();
@@ -14,8 +15,10 @@ const TestResultPage = ({ userInfo, resetTest }) => {
   const [report, setReport] = useState({});
   const [matchEduLevel, setMatchEduLevel] = useState([]);
   const [matchMajors, setMatchMajors] = useState([]);
-
+  const state = useTestState();
+  const dispatch = useTestDispatch();
   useEffect(() => {
+    console.log(state);
     if (location.state) {
       api
         .getTestResult(location.state.seq)
@@ -26,71 +29,72 @@ const TestResultPage = ({ userInfo, resetTest }) => {
     }
   }, [location]);
 
-  const resultScore = useMemo(() => {
-    if (report?.result) {
-      const temp = report?.result.wonScore.split(" ");
-      temp.pop();
-      const score = temp.reduce((acc, item) => {
-        const [key, score] = item.split("=").map(e => Number(e));
-        acc.push({ key, score });
-        return acc;
-      }, []);
+  // const resultScore = useMemo(() => {
+  //   if (report?.result) {
+  //     const temp = report?.result.wonScore.split(" ");
+  //     temp.pop();
+  //     const score = temp.reduce((acc, item) => {
+  //       const [key, score] = item.split("=").map(e => Number(e));
+  //       acc.push({ key, score });
+  //       return acc;
+  //     }, []);
 
-      return score;
-    }
-    return [];
-  }, [report]);
+  //     return score;
+  //   }
+  //   return [];
+  // }, [report]);
 
-  const sortedResultScore = useMemo(() => {
-    return [...resultScore].sort((a, b) => {
-      if (a.score > b.score) {
-        return -1;
-      } else if (a.score === b.score) {
-        if (a.key > b.key) {
-          return 1;
-        } else if (a.key === b.key) {
-          return 0;
-        } else {
-          return -1;
-        }
-      } else {
-        return 1;
-      }
-    });
-  }, [resultScore]);
+  // const sortedResultScore = useMemo(() => {
+  //   return [...resultScore].sort((a, b) => {
+  //     if (a.score > b.score) {
+  //       return -1;
+  //     } else if (a.score === b.score) {
+  //       if (a.key > b.key) {
+  //         return 1;
+  //       } else if (a.key === b.key) {
+  //         return 0;
+  //       } else {
+  //         return -1;
+  //       }
+  //     } else {
+  //       return 1;
+  //     }
+  //   });
+  // }, [resultScore]);
 
-  const getMatchJob = useCallback(async () => {
-    if (sortedResultScore.length !== 0) {
-      const no1 = sortedResultScore[0].key;
-      const no2 = sortedResultScore[1].key;
-      await api
-        .getMatchEduLevels(no1, no2)
-        .then(res => {
-          setMatchEduLevel(res);
-        })
-        .catch(err => console.log(err));
-      await api
-        .getMatchMajors(no1, no2)
-        .then(res => {
-          setMatchMajors(res);
-        })
-        .catch(err => console.log(err));
-    }
-  }, [sortedResultScore]);
+  // const getMatchJob = useCallback(async () => {
+  //   if (sortedResultScore.length !== 0) {
+  //     const no1 = sortedResultScore[0].key;
+  //     const no2 = sortedResultScore[1].key;
+  //     await api
+  //       .getMatchEduLevels(no1, no2)
+  //       .then(res => {
+  //         setMatchEduLevel(res);
+  //       })
+  //       .catch(err => console.log(err));
+  //     await api
+  //       .getMatchMajors(no1, no2)
+  //       .then(res => {
+  //         setMatchMajors(res);
+  //       })
+  //       .catch(err => console.log(err));
+  //   }
+  // }, [sortedResultScore]);
 
-  useEffect(() => {
-    getMatchJob();
-  }, [getMatchJob]);
+  // useEffect(() => {
+  //   getMatchJob();
+  // }, [getMatchJob]);
 
-  const userInfoArr = useMemo(() => {
-    const obj = { ...userInfo };
-    obj.startDtm = obj.startDtm.toLocaleDateString();
-    obj.gender = genders[obj.gender];
-    return [Object.values(obj)];
-  }, [userInfo]);
+  // const userInfoArr = useMemo(() => {
+  //   const obj = { ...userInfo };
+  //   obj.startDtm = obj.startDtm.toLocaleDateString();
+  //   obj.gender = genders[obj.gender];
+  //   return [Object.values(obj)];
+  // }, [userInfo]);
 
   const gotoStart = () => {
-    resetTest();
+    // resetTest();
+    dispatch({ type: "RESET" });
     navigate("/");
   };
   return (
@@ -106,23 +110,25 @@ const TestResultPage = ({ userInfo, resetTest }) => {
             알려줍니다. 또한 본인이 가장 중요하게 생각하는 가치를 충족시켜줄 수
             있는 직업에 대해 생각해 볼 기회를 제공합니다.
           </SText>
-          <UserInfoTable info={userInfoArr} />
+          <UserInfoTable user={state.user} date={state.date} />
         </SPartWrap>
 
         <SPartWrap>
           <h2>직업가치관 결과</h2>
-          <TestResultChart data={resultScore} />
+          <TestResultChart
+          // data={resultScore}
+          />
         </SPartWrap>
 
         <JobTable
           partNames={educationLevelNames}
-          info={matchEduLevel}
+          info={state.jobsByEduLevel}
           title={"종사자 평균 학력별"}
         />
 
         <JobTable
           partNames={majorNames}
-          info={matchMajors}
+          info={state.jobsByMajor}
           title={"종사자 평균 전공별"}
         />
 

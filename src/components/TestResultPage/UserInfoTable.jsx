@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
-const UserInfoTable = ({ info }) => {
+const UserInfoTable = ({ user, date }) => {
   return (
     <Stable>
       <thead>
@@ -12,13 +12,10 @@ const UserInfoTable = ({ info }) => {
         </tr>
       </thead>
       <tbody>
-        {info.map((arr, i) => (
-          <tr key={i}>
-            {arr.map((e, i) => (
-              <td key={i}>{e}</td>
-            ))}
-          </tr>
-        ))}
+        <tr>
+          {user && Object.values(user).map((e, i) => <td key={i}>{e}</td>)}
+          <td>{date && date.toLocaleDateString()}</td>
+        </tr>
       </tbody>
     </Stable>
   );

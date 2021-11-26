@@ -1,14 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { useTestDispatch, useTestState } from "../../provider/testProvider";
 
 const UserForm = ({ getStartUserInfo }) => {
   const navigator = useNavigate();
-
+  const state = useTestState();
+  const dispatch = useTestDispatch();
+  useEffect(() => {
+    console.log(state);
+  });
   const [name, setName] = useState("");
   const [isName, setIsName] = useState(false);
   const [nameMessage, setNameMessage] = useState("이름을 입력하세요");
-
   const [gender, setGender] = useState(0);
 
   const nameRef = useRef();
@@ -30,7 +34,10 @@ const UserForm = ({ getStartUserInfo }) => {
   const onclickStart = e => {
     e.preventDefault();
     const startDtm = new Date();
-    getStartUserInfo({ name, gender, startDtm });
+    console.log(startDtm);
+    dispatch({ type: "SET_USER", data: { name, gender } });
+    dispatch({ type: "SET_DATE", data: startDtm });
+    // getStartUserInfo({ name, gender, startDtm });
     navigator("/intro");
   };
 
