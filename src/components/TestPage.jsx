@@ -14,10 +14,18 @@ const useClick = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const onClickNext = () => {
     setCurrentStep(currentStep + 1);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const onClickPrev = () => {
     setCurrentStep(cur => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       if (cur > 0) return cur - 1;
       else return cur;
     });
@@ -147,7 +155,7 @@ const TestPage = ({ getUserAnswer }) => {
 };
 const STestPageBlock = styled.div`
   height: 100%;
-  overflow: scroll;
+  // overflow: scroll;
   padding: 0 10%;
   text-align: center;
   width: 600px;

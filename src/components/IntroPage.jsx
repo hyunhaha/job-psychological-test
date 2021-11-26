@@ -36,33 +36,39 @@ const IntroPage = props => {
   }, [answer]);
   return (
     <SIntroPageBlock>
-      <h1>검사예시</h1>
-      <ProgressBar progress={progress} />
       <div>
-        <p className="description-item">
-          직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에 표시하세요.
-        </p>
-        <p className="description-item">
-          가치의 뜻을 잘 모르겠다면 문항 아래에 있는 가치의 설명을 확인해보세요.
-        </p>
+        <STitle>검사예시</STitle>
+        <ProgressBar progress={progress} />
+        <div>
+          <p className="description-item">
+            직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에
+            표시하세요.
+          </p>
+          <p className="description-item">
+            가치의 뜻을 잘 모르겠다면 문항 아래에 있는 가치의 설명을
+            확인해보세요.
+          </p>
+        </div>
+        <Question data={data} onSelect={onSelect} />
+        <Button
+          className="next-button"
+          onClick={onClickTestStart}
+          disabled={answer === 0}
+        >
+          검사 시작하기
+        </Button>
       </div>
-      <Question data={data} onSelect={onSelect} />
-      <Button
-        className="next-button"
-        onClick={onClickTestStart}
-        disabled={answer === 0}
-      >
-        검사 시작하기
-      </Button>
     </SIntroPageBlock>
   );
 };
 const SIntroPageBlock = styled.div`
-  height: 100vh;
-  padding: 20px 10%;
   text-align: center;
   width: 600px;
   margin: 0 auto;
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
   .description-item {
     margin: 0;
     padding-bottom: 10px;
@@ -75,5 +81,9 @@ const SIntroPageBlock = styled.div`
     background-color: #7f7fd550;
     font-weight: bolder;
   }
+`;
+const STitle = styled.h1`
+  margin: 0;
+  padding: 20px 0;
 `;
 export default IntroPage;

@@ -99,7 +99,6 @@ const TestCompletedPage = ({ userName }) => {
   );
 };
 const STestCompletedBlock = styled.div`
-  padding: 20px 5%;
   text-align: center;
   width: 600px;
   margin: 0 auto;
