@@ -15,15 +15,7 @@ const Question = ({ data, onSelect, renderAnswer }) => {
   } = data;
   const [selectedItem, setSelectedItem] = useState("");
 
-  // useEffect(() => {
-  //   setSelectedItem("");
-  // }, [data]);
-  // useEffect(() => {
-  //   console.log(renderAnswer);
-  // }, [renderAnswer]);
-
   useEffect(() => {
-    // console.log(renderAnswer);
     if (renderAnswer) {
       setSelectedItem(renderAnswer);
     } else {
@@ -39,33 +31,29 @@ const Question = ({ data, onSelect, renderAnswer }) => {
 
   return (
     <SQuestionBlock>
-      <span className="question-number">{`${qitemNo}`}</span>
-      <h3 className="question">{question}</h3>
-      <div className="answer-set">
-        <div
-          className={`answer ${selectedItem === 1 ? "selected" : ""}`}
-          data-id="1"
-          data-score={answerScore01}
+      <SQuestionNumber>{qitemNo}</SQuestionNumber>
+      <SQuestion>{question}</SQuestion>
+      <SAnswerSet>
+        <SAnswerButton
+          className={`${selectedItem === 1 && "selected"}`}
           onClick={() => {
             onAnswerSelect(1, answerScore01);
           }}
         >
-          <h4 className="answer-title">{answer01}</h4>
-          <div className="answer-detail">{answer03}</div>
-        </div>
+          <SButtonSpanHead>{answer01}</SButtonSpanHead>
+          <SButtonSpan>{answer03}</SButtonSpan>
+        </SAnswerButton>
 
-        <div
-          className={`answer ${selectedItem === 2 ? "selected" : ""}`}
-          data-id="2"
-          data-score={answerScore02}
+        <SAnswerButton
+          className={`${selectedItem === 2 && "selected"}`}
           onClick={() => {
             onAnswerSelect(2, answerScore02);
           }}
         >
-          <h4 className="answer-title">{answer02}</h4>
-          <div className="answer-detail">{answer04}</div>
-        </div>
-      </div>
+          <SButtonSpanHead>{answer02}</SButtonSpanHead>
+          <SButtonSpan>{answer04}</SButtonSpan>
+        </SAnswerButton>
+      </SAnswerSet>
     </SQuestionBlock>
   );
 };
@@ -76,44 +64,50 @@ const SQuestionBlock = styled.div`
   margin-bottom: 30px;
   position: relative;
   background-color: white;
-  .question-number {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    background-color: #f1f1f1;
-    color: #8f8f8f;
-  }
-  .question {
-    font-weight: normal;
-  }
-  .answer-set {
-    padding: 10px;
-    display: flex;
-  }
-  .answer {
-    flex: 1 1 0%;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 0px 0px 5px 0px #7f7fd550;
-    box-sizing: border-box;
-  }
-  .answer:first-child {
-    margin-right: 10px;
-  }
+
   .selected {
     background-color: #86a8e7;
     color: white;
     box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 40%);
   }
-  .answer-title {
-    padding: 10px 0;
-    margin: 0;
-    color: inherit;
+`;
+const SAnswerButton = styled.button`
+  flex: 1 1 0%;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0px 0px 5px 0px #7f7fd550;
+  box-sizing: border-box;
+  border: none;
+  background-color: white;
+  &:nth-child(1) {
+    margin-right: 10px;
   }
-  .answer-detail {
-    padding: 0 30px 10px;
-  }
+`;
+const SQuestionNumber = styled.span`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+  color: #8f8f8f;
+`;
+const SQuestion = styled.h3`
+  font-weight: normal;
+`;
+const SAnswerSet = styled.div`
+  padding: 10px;
+  display: flex;
+`;
+const SButtonSpanHead = styled.span`
+  display: inline-block;
+  font-weight: bold;
+  padding: 10px 0;
+  margin: 0;
+  color: inherit;
+`;
+const SButtonSpan = styled.span`
+  display: inline-block;
+  padding: 0 20px 10px;
 `;
 export default Question;
