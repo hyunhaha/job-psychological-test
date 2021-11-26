@@ -9,8 +9,8 @@ import ProgressBar from "./ProgressBar";
 import Question from "./Question";
 import api from "./utils/api/test";
 
-const useClick = () => {
-  const [currentStep, setCurrentStep] = useState(0);
+const useClick = initial => {
+  const [currentStep, setCurrentStep] = useState(initial);
   const onClickNext = () => {
     setCurrentStep(currentStep + 1);
     window.scrollTo({
@@ -29,21 +29,28 @@ const useClick = () => {
       else return cur;
     });
   };
-
-  return [currentStep, onClickNext, onClickPrev];
+  const onClickResult = (arr, getUserAnswer) => {
+    const answerString = arr
+      .map(([key, value]) => `B${key}=${value[0]}`)
+      .join(" ");
+    getUserAnswer(answerString);
+  };
+  return [currentStep, onClickNext, onClickPrev, onClickResult];
 };
 
 const TestPage = ({ getUserAnswer }) => {
   const state = useTestState();
   const dispatch = useTestDispatch();
+
   // useEffect(() => {
   //   console.log(state);
   // });
+
   const [list, setLIst] = useState([]);
   const [questionStep, setQuestionStep] = useState(0);
 
   const [answerObj, setAnswerObj] = useState({});
-  const [currentStep, onClickNext, onClickPrev] = useClick(0);
+  const [currentStep, onClickNext, onClickPrev, onClickResult] = useClick(0);
 
   useEffect(() => {
     api
@@ -82,13 +89,6 @@ const TestPage = ({ getUserAnswer }) => {
     });
   };
 
-  const onClickResult = () => {
-    const answerString = UsesrAnswerObjToArr.map(
-      ([key, value]) => `B${key}=${value[0]}`
-    ).join(" ");
-    getUserAnswer(answerString);
-  };
-
   const progress = useMemo(() => {
     if (UsesrAnswerObjToArr.length > 0) {
       return Math.ceil((UsesrAnswerObjToArr.length / list.length) * 100);
@@ -118,7 +118,9 @@ const TestPage = ({ getUserAnswer }) => {
           </Button>
         ) : (
           <Button
-            onClick={onClickResult}
+            onClick={() => {
+              onClickResult(UsesrAnswerObjToArr, getUserAnswer);
+            }}
             disabled={list.length > Object.keys(answerObj).length}
           >
             결과보기
