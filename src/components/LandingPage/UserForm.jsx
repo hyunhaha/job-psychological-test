@@ -2,14 +2,14 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 
-const UserForm = ({ getUserNameSex }) => {
+const UserForm = ({ getStartUserInfo }) => {
   const navigator = useNavigate();
 
   const [name, setName] = useState("");
   const [isName, setIsName] = useState(false);
   const [nameMessage, setNameMessage] = useState("이름을 입력하세요");
 
-  const [sex, setSex] = useState("");
+  const [gender, setGender] = useState(0);
 
   const nameRef = useRef();
 
@@ -24,12 +24,13 @@ const UserForm = ({ getUserNameSex }) => {
   };
 
   const onChangeSex = e => {
-    setSex(e.target.value);
+    setGender(Number(e.target.value));
   };
 
   const onclickStart = e => {
     e.preventDefault();
-    getUserNameSex(name, sex);
+    const startDtm = new Date();
+    getStartUserInfo({ name, gender, startDtm });
     navigator("/intro");
   };
 
@@ -58,7 +59,7 @@ const UserForm = ({ getUserNameSex }) => {
                 type="radio"
                 id="female"
                 name="sex"
-                value="F"
+                value={100324}
                 onChange={onChangeSex}
               />
               <label htmlFor="female">여자</label>
@@ -68,20 +69,20 @@ const UserForm = ({ getUserNameSex }) => {
                 type="radio"
                 id="male"
                 name="sex"
-                value="M"
+                value={100323}
                 onChange={onChangeSex}
               />
               <label htmlFor="male">남자</label>
             </div>
           </div>
-          <SAlert isDisplay={sex}>성별을 선택하세요</SAlert>
+          <SAlert isDisplay={gender}>성별을 선택하세요</SAlert>
         </div>
       </form>
       <div></div>
       <button
         className="start-button"
         type="submit"
-        disabled={!isName || !sex}
+        disabled={!isName || !gender}
         onClick={onclickStart}
       >
         테스트 시작

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import UserForm from "./UserForm";
 
-const LandingPage = ({ getUserNameSex }) => {
+const LandingPage = ({ getStartUserInfo }) => {
   return (
     <SLandingPageBlock>
       <div className="wrap">
@@ -10,7 +10,7 @@ const LandingPage = ({ getUserNameSex }) => {
           <h1>직업 심리 검사</h1>
         </div>
         <div className="right">
-          <UserForm getUserNameSex={getUserNameSex} />
+          <UserForm getStartUserInfo={getStartUserInfo} />
         </div>
       </div>
     </SLandingPageBlock>
