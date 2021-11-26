@@ -1,99 +1,19 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import React from "react";
+import { useNavigate } from "react-router";
 import JobTable from "./JobTable";
 import UserInfoTable from "./UserInfoTable";
 import TestResultChart from "./TestResultChart";
-import api from "../utils/api/test";
 import styled from "styled-components";
 import Button from "../Button";
-import { educationLevelNames, genders, majorNames } from "../utils/contents";
+import { educationLevelNames, majorNames } from "../utils/contents";
 import { useTestDispatch, useTestState } from "../../provider/testProvider";
 
-const TestResultPage = ({ userInfo, resetTest }) => {
-  const location = useLocation();
+const TestResultPage = () => {
   const navigate = useNavigate();
-  const [report, setReport] = useState({});
-  const [matchEduLevel, setMatchEduLevel] = useState([]);
-  const [matchMajors, setMatchMajors] = useState([]);
   const state = useTestState();
   const dispatch = useTestDispatch();
-  useEffect(() => {
-    console.log(state);
-    if (location.state) {
-      api
-        .getTestResult(location.state.seq)
-        .then(res => {
-          setReport(res);
-        })
-        .catch(err => console.log(err));
-    }
-  }, [location]);
-
-  // const resultScore = useMemo(() => {
-  //   if (report?.result) {
-  //     const temp = report?.result.wonScore.split(" ");
-  //     temp.pop();
-  //     const score = temp.reduce((acc, item) => {
-  //       const [key, score] = item.split("=").map(e => Number(e));
-  //       acc.push({ key, score });
-  //       return acc;
-  //     }, []);
-
-  //     return score;
-  //   }
-  //   return [];
-  // }, [report]);
-
-  // const sortedResultScore = useMemo(() => {
-  //   return [...resultScore].sort((a, b) => {
-  //     if (a.score > b.score) {
-  //       return -1;
-  //     } else if (a.score === b.score) {
-  //       if (a.key > b.key) {
-  //         return 1;
-  //       } else if (a.key === b.key) {
-  //         return 0;
-  //       } else {
-  //         return -1;
-  //       }
-  //     } else {
-  //       return 1;
-  //     }
-  //   });
-  // }, [resultScore]);
-
-  // const getMatchJob = useCallback(async () => {
-  //   if (sortedResultScore.length !== 0) {
-  //     const no1 = sortedResultScore[0].key;
-  //     const no2 = sortedResultScore[1].key;
-  //     await api
-  //       .getMatchEduLevels(no1, no2)
-  //       .then(res => {
-  //         setMatchEduLevel(res);
-  //       })
-  //       .catch(err => console.log(err));
-  //     await api
-  //       .getMatchMajors(no1, no2)
-  //       .then(res => {
-  //         setMatchMajors(res);
-  //       })
-  //       .catch(err => console.log(err));
-  //   }
-  // }, [sortedResultScore]);
-
-  // useEffect(() => {
-  //   getMatchJob();
-  // }, [getMatchJob]);
-
-  // const userInfoArr = useMemo(() => {
-  //   const obj = { ...userInfo };
-  //   obj.startDtm = obj.startDtm.toLocaleDateString();
-  //   obj.gender = genders[obj.gender];
-  //   return [Object.values(obj)];
-  // }, [userInfo]);
 
   const gotoStart = () => {
-    // resetTest();
     dispatch({ type: "RESET" });
     navigate("/");
   };
@@ -115,9 +35,7 @@ const TestResultPage = ({ userInfo, resetTest }) => {
 
         <SPartWrap>
           <h2>직업가치관 결과</h2>
-          <TestResultChart
-          // data={resultScore}
-          />
+          <TestResultChart />
         </SPartWrap>
 
         <JobTable

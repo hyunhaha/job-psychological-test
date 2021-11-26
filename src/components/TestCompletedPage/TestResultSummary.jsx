@@ -1,18 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useTestState } from "../../provider/testProvider";
 import { abilityNames } from "../utils/contents";
 
-const TestResultSummary = ({
-  userName,
-  sortedResultScore,
-  matchJobs1,
-  matchJobs2,
-}) => {
+const TestResultSummary = () => {
   const state = useTestState();
-  useEffect(() => {
-    console.log(state);
-  });
+
   return (
     <div>
       <SResult>

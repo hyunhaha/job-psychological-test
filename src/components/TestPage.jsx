@@ -35,18 +35,14 @@ const useClick = initial => {
 };
 
 const TestPage = () => {
+  const navigate = useNavigate();
   const state = useTestState();
   const dispatch = useTestDispatch();
+  const [currentStep, onClickNext, onClickPrev] = useClick(0);
 
-  useEffect(() => {
-    console.log(state);
-  });
-  const navigate = useNavigate();
   const [list, setLIst] = useState([]);
   const [questionStep, setQuestionStep] = useState(0);
-
   const [answerObj, setAnswerObj] = useState({});
-  const [currentStep, onClickNext, onClickPrev] = useClick(0);
 
   useEffect(() => {
     api
@@ -58,11 +54,16 @@ const TestPage = () => {
       })
       .catch(err => console.log(err));
   }, [dispatch]);
+
   const renderList = useMemo(() => {
     return list.slice(currentStep * 5, currentStep * 5 + 5);
   }, [currentStep, list]);
 
-  const onSelect = (questionNumber, answerScore, selectedAnswerNumber) => {
+  const onAnswerSelect = (
+    questionNumber,
+    answerScore,
+    selectedAnswerNumber
+  ) => {
     setAnswerObj(cur => {
       const newObj = { ...cur };
       newObj[questionNumber] = [answerScore, selectedAnswerNumber];
@@ -91,25 +92,20 @@ const TestPage = () => {
   }, [UsesrAnswerObjToArr]);
 
   const onClickResult = async () => {
-    // const answerString = UsesrAnswerObjToArr.map(
-    //   ([key, value]) => `B${key}=${value[0]}`
-    // ).join(" ");
-    console.log(state.user);
-    api
+    await api
       .submitTestAnswer({
         ...state.user,
+        startDtm: state.date,
         answers: answerString,
       })
       .then(res => {
         const seq = res.url.split("seq=").pop();
-        console.log(seq);
         dispatch({ type: "SET_SEQ", data: seq });
-        // dispatch({ type: "SET_USER", data: { name, gender, startDtm } });
-        navigate("/completed", { state: { seq } });
       })
       .catch(err => {
         console.log(err);
       });
+    navigate("/completed");
   };
   const testclick = async () => {
     await api
@@ -122,11 +118,11 @@ const TestPage = () => {
       .then(res => {
         const seq = res.url.split("seq=").pop();
         dispatch({ type: "SET_SEQ", data: seq });
-        navigate("/completed", { state: { seq } });
       })
       .catch(err => {
         console.log(err);
       });
+    navigate("/completed");
   };
   const progress = useMemo(() => {
     if (UsesrAnswerObjToArr.length > 0) {
@@ -144,7 +140,7 @@ const TestPage = () => {
             key={i}
             data={e}
             renderAnswer={renderAnswerList[i]}
-            onSelect={onSelect}
+            onSelect={onAnswerSelect}
           />
         ))}
         {currentStep > 0 && <Button onClick={onClickPrev}>이전</Button>}

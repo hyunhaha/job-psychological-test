@@ -1,9 +1,7 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
-import { useTestState } from "../../provider/testProvider";
 
 const JobTable = ({ partNames, info, title }) => {
-  const state = useTestState();
   const parts = useMemo(() => {
     const obj = info.reduce((acc, e) => {
       if (e[2] in acc) {

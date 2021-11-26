@@ -6,9 +6,6 @@ export const setReportData = async (dispatch, state) => {
     await api
       .getTestResult(state.seq)
       .then(res => {
-        // setReport(res);
-        console.log(res.result);
-        // setReport(res.result.wonScore);
         report = res.result.wonScore;
         dispatch({ type: "SET_REPORT", data: res.result.wonScore });
 

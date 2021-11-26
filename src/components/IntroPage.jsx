@@ -8,7 +8,6 @@ import { introAnswer } from "./utils/contents";
 
 const IntroPage = props => {
   const navigator = useNavigate();
-
   const [answer, setAnswer] = useState(0);
 
   const onSelect = (q, a) => {
