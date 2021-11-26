@@ -14,6 +14,27 @@ const TestResultPage = ({ userInfo, resetTest }) => {
   const [matchEduLevel, setMatchEduLevel] = useState([]);
   const [matchMajors, setMatchMajors] = useState([]);
 
+  const educationLevelNames = {
+    1: "중졸이하",
+    2: "고졸",
+    3: "전문대졸",
+    4: "대졸",
+    5: "대학원졸",
+  };
+  const majorNames = {
+    0: "계열무관",
+    1: "인문",
+    2: "사회",
+    3: "교육",
+    4: "공학",
+    5: "자연",
+    6: "의학",
+    7: "예체능",
+  };
+  const genders = {
+    100323: "남성",
+    100324: "여성",
+  };
   useEffect(() => {
     if (location.state) {
       api.getTestResult(location.state.seq).then(res => {
@@ -23,7 +44,6 @@ const TestResultPage = ({ userInfo, resetTest }) => {
   }, [location]);
 
   const resultScore = useMemo(() => {
-    console.log(report);
     if (report?.result) {
       const temp = report?.result.wonScore.split(" ");
       temp.pop();
@@ -74,33 +94,12 @@ const TestResultPage = ({ userInfo, resetTest }) => {
   }, [getMatchJob]);
 
   const userInfoArr = useMemo(() => {
-    const arr = Object.values(userInfo).map((e, i) => {
-      if (i === 2) {
-        return e.toLocaleDateString();
-      } else {
-        return e;
-      }
-    });
-    return [arr];
-  }, [userInfo]);
+    const obj = { ...userInfo };
+    obj.startDtm = obj.startDtm.toLocaleDateString();
+    obj.gender = genders[obj.gender];
+    return [Object.values(obj)];
+  }, [genders, userInfo]);
 
-  const educationLevelNames = {
-    1: "중졸이하",
-    2: "고졸",
-    3: "전문대졸",
-    4: "대졸",
-    5: "대학원졸",
-  };
-  const majorNames = {
-    0: "계열무관",
-    1: "인문",
-    2: "사회",
-    3: "교육",
-    4: "공학",
-    5: "자연",
-    6: "의학",
-    7: "예체능",
-  };
   const gotoStart = () => {
     resetTest();
     navigate("/");
@@ -146,7 +145,6 @@ const TestResultPage = ({ userInfo, resetTest }) => {
 
 const STestResultPageBlock = styled.div`
   height: 100%;
-  overflow: scroll;
   padding: 0 10%;
   text-align: center;
   width: 600px;

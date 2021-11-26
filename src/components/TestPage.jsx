@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import { useMemo } from "react";
 import { useState } from "react";
@@ -37,20 +36,18 @@ const useClick = () => {
 const TestPage = ({ getUserAnswer }) => {
   const state = useTestState();
   const dispatch = useTestDispatch();
-  useEffect(() => {
-    console.log(state);
-  });
+  // useEffect(() => {
+  //   console.log(state);
+  // });
   const [list, setLIst] = useState([]);
   const [questionStep, setQuestionStep] = useState(0);
 
   const [answerObj, setAnswerObj] = useState({});
   const [currentStep, onClickNext, onClickPrev] = useClick(0);
 
-  // const [currentStep, setCurrentStep] = useState(0);
   useEffect(() => {
     api.getTestQuestion(6).then(data => {
       // dispatch({ type: "SET_QUESTIONS", data: data });
-      console.log(data);
       setLIst(data);
       setQuestionStep(Math.ceil(data.length / 5));
     });
@@ -74,22 +71,7 @@ const TestPage = ({ getUserAnswer }) => {
     return arr;
   }, [currentStep, UsesrAnswerObjToArr]);
 
-  // const onClickNext = e => {
-  //   setCurrentStep(currentStep + 1);
-  // };
-  // const onClickPrev = e => {
-  //   console.log(currentStep);
-  //   setCurrentStep(cur => {
-  //     if (cur > 0) {
-  //       return cur - 1;
-  //     } else {
-  //       return cur;
-  //     }
-  //   });
-  // };
-
   const onSelect = (questionNumber, answerScore, selectedAnswerNumber) => {
-    console.log(questionNumber, answerScore, selectedAnswerNumber);
     setAnswerObj(cur => {
       const newObj = { ...cur };
       newObj[questionNumber] = [answerScore, selectedAnswerNumber];
@@ -105,7 +87,6 @@ const TestPage = ({ getUserAnswer }) => {
   };
 
   const progress = useMemo(() => {
-    console.log(UsesrAnswerObjToArr);
     if (UsesrAnswerObjToArr.length > 0) {
       return Math.ceil((UsesrAnswerObjToArr.length / list.length) * 100);
     } else return 0;
@@ -155,7 +136,6 @@ const TestPage = ({ getUserAnswer }) => {
 };
 const STestPageBlock = styled.div`
   height: 100%;
-  // overflow: scroll;
   padding: 0 10%;
   text-align: center;
   width: 600px;

@@ -2,9 +2,6 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 
 const UserInfoTable = ({ info }) => {
-  useEffect(() => {
-    console.log(info);
-  }, [info]);
   return (
     <Stable>
       <thead>

@@ -21,7 +21,6 @@ const TestCompletedPage = ({ userName }) => {
   }, [location]);
 
   const resultScore = useMemo(() => {
-    console.log(report);
     if (report?.result) {
       const temp = report?.result.wonScore.split(" ");
       temp.pop();
@@ -72,7 +71,6 @@ const TestCompletedPage = ({ userName }) => {
   }, [getMatchJob]);
 
   const onClickResult = () => {
-    console.log(location.state);
     navigate("/result", { state: { seq: location.state.seq } });
   };
 

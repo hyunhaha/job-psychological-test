@@ -1,10 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled, { keyframes } from "styled-components";
 
 const ProgressBar = ({ progress }) => {
-  useEffect(() => {
-    console.log("progress", progress);
-  }, [progress]);
   return (
     <SProgressBarBlock>
       <SProgressText progress={progress}>{progress}%</SProgressText>

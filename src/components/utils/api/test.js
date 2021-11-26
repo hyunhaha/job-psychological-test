@@ -3,7 +3,6 @@ import axios from 'axios';
 const baseURL = 'http://www.career.go.kr/inspct/openapi/test';
 const apikey = "5037c661501070d53c880f0f17d6f7fa";
 
-
 const api = {
   getTestQuestion: async (questionNumber) => {
     const res = await axios
@@ -16,7 +15,6 @@ const api = {
     throw new Error(res?.data?.ERROR_REASON || "");
   },
   submitTestAnswer: async ({ name, gender, startDtm, answers }) => {
-    console.log(name, gender, startDtm, answers)
     let data = JSON.stringify({
       apikey: apikey,
       qestrnSeq: "6",
@@ -38,7 +36,6 @@ const api = {
 
     return await axios(config)
       .then(res => {
-        console.log(res.data.RESULT)
         return res.data.RESULT;
       })
       .catch(function (error) {
@@ -48,7 +45,6 @@ const api = {
 
   getTestResult: async (seq) => {
     const res = await axios.get(`https://www.career.go.kr/inspct/api/psycho/report?seq=${seq}`)
-    console.log(res)
     if (res?.data.result) {
       return res.data;
     }

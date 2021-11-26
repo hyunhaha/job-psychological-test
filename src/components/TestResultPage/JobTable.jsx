@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 
 const JobTable = ({ partNames, info, title }) => {
@@ -29,12 +29,13 @@ const JobTable = ({ partNames, info, title }) => {
           </tr>
         </thead>
         <tbody>
-          {parts.map(([part, items]) => (
-            <tr>
+          {parts.map(([part, items], i) => (
+            <tr key={i}>
               <td>{partNames[part]}</td>
               <td>
-                {items.map(e => (
+                {items.map((e, i) => (
                   <SLink
+                    key={i}
                     href={`https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=${e[0]}`}
                   >
                     {e[1]}

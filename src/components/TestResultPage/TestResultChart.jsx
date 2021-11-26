@@ -1,12 +1,8 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import TestResultChartBar from "./TestResultChartBar";
 
 const TestResultChart = ({ data }) => {
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   const maxScore = useMemo(() => {
     if (Array.isArray(data)) {
       return Math.max(...data.map(({ score }) => score));

@@ -40,21 +40,17 @@ const IntroPage = props => {
         <STitle>검사예시</STitle>
         <ProgressBar progress={progress} />
         <div>
-          <p className="description-item">
+          <SDes>
             직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에
             표시하세요.
-          </p>
-          <p className="description-item">
+          </SDes>
+          <SDes>
             가치의 뜻을 잘 모르겠다면 문항 아래에 있는 가치의 설명을
             확인해보세요.
-          </p>
+          </SDes>
         </div>
         <Question data={data} onSelect={onSelect} />
-        <Button
-          className="next-button"
-          onClick={onClickTestStart}
-          disabled={answer === 0}
-        >
+        <Button onClick={onClickTestStart} disabled={answer === 0}>
           검사 시작하기
         </Button>
       </div>
@@ -73,14 +69,10 @@ const SIntroPageBlock = styled.div`
     margin: 0;
     padding-bottom: 10px;
   }
-  .next-button {
-    border: none;
-    border-radius: 10px;
-    width: 100px;
-    height: 50px;
-    background-color: #7f7fd550;
-    font-weight: bolder;
-  }
+`;
+const SDes = styled.p`
+  margin: 0;
+  padding-bottom: 10px;
 `;
 const STitle = styled.h1`
   margin: 0;

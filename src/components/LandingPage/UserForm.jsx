@@ -30,7 +30,6 @@ const UserForm = ({ getStartUserInfo }) => {
   const onclickStart = e => {
     e.preventDefault();
     const startDtm = new Date();
-    // console.log(new Date("2021-11-23T15:58:20.000+0000").toLocaleDateString());
     getStartUserInfo({ name, gender, startDtm });
     navigator("/intro");
   };
