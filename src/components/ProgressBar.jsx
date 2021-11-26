@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const ProgressBar = ({ progress }) => {
   useEffect(() => {
@@ -37,5 +37,14 @@ const SProgressBar = styled.div`
   height: 26px;
   background-color: #7d7dcd90;
   border-radius: 10px;
+  animation: ${props => animate(props.progress)} 1s ease-out;
+`;
+const animate = progress => keyframes`
+  from{
+    width:${progress - Math.ceil(100 / 28)}%;
+  }
+  to{
+    width:${progress}%;
+  }
 `;
 export default ProgressBar;
