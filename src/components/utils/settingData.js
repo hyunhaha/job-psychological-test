@@ -1,4 +1,4 @@
-import api from './api/test';
+import api from './api';
 
 export const setReportData = async (dispatch, state) => {
   if (state.seq) {

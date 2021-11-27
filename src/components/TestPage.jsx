@@ -8,7 +8,7 @@ import { useTestState } from "../provider/testProvider";
 import Button from "./Button";
 import ProgressBar from "./ProgressBar";
 import Question from "./Question";
-import api from "./utils/api/test";
+import api from "./utils/api";
 
 const useStep = initial => {
   const [currentStep, setCurrentStep] = useState(initial);
