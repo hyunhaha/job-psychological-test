@@ -5,14 +5,14 @@ import UserForm from "./UserForm";
 const LandingPage = ({ getStartUserInfo }) => {
   return (
     <SLandingPageBlock>
-      <div className="wrap">
-        <div className="left">
+      <SWrap>
+        <SPart>
           <h1>직업 가치관 검사</h1>
-        </div>
-        <div className="right">
+        </SPart>
+        <SPart>
           <UserForm getStartUserInfo={getStartUserInfo} />
-        </div>
-      </div>
+        </SPart>
+      </SWrap>
     </SLandingPageBlock>
   );
 };
@@ -20,20 +20,16 @@ const LandingPage = ({ getStartUserInfo }) => {
 const SLandingPageBlock = styled.div`
   margin: 0 auto;
   box-sizing: border-box;
-  .wrap {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-    align-items: center;
-    box-sizing: border-box;
-  }
-  .left {
-    flex: 1 1 0%;
-    text-align: center;
-  }
-  .right {
-    flex: 1 1 0%;
-  }
 `;
-
+const SWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  align-items: center;
+  box-sizing: border-box;
+`;
+const SPart = styled.div`
+  flex: 1 1 0%;
+  text-align: center;
+`;
 export default LandingPage;

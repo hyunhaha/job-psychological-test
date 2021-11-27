@@ -40,6 +40,7 @@ const SAlert = styled.div`
 visibility:${props => (props.isDisplay ? "hidden" : "visible")};
   color: #8698e7;
   font-size: 14px;
+  text-align: left;
 }`;
 
 export default UserName;

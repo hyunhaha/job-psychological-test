@@ -36,7 +36,7 @@ export const setReportData = async (dispatch, state) => {
         return 1;
       }
     });
-    dispatch({ type: "SET_REPORT_SCORE", data: resultScore });
+    dispatch({ type: "SET_SORTED_REPORT_SCORE", data: resultScore });
 
     if (sortedResultScore.length !== 0) {
       const no1 = sortedResultScore[0].key;

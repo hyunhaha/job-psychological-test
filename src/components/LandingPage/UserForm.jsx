@@ -39,14 +39,12 @@ const UserForm = () => {
   return (
     <SUserForm>
       <STitle>검사를 위해 정보 입력해주세요</STitle>
-      {/* <form> */}
       <UserName
         onChangeName={onChangeName}
         isName={isName}
         nameMessage={nameMessage}
       />
       <UserGender onChangeGender={onChangeGender} gender={gender} />
-      {/* </form> */}
       <SStartButton
         type="submit"
         disabled={!isName || !gender}
@@ -61,13 +59,14 @@ const SUserForm = styled.div`
   width: 400px;
   margin: 0 auto;
   background-color: #ffffff70;
-  padding: 10%;
+  padding: 8%;
   box-sizing: border-box;
   border-radius: 20px;
 `;
 const STitle = styled.h4`
   margin: 0;
   padding: 20px 0;
+  text-align: left;
 `;
 const SStartButton = styled.button`
   width: 100%;
