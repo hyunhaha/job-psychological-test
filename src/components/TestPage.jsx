@@ -10,7 +10,7 @@ import ProgressBar from "./ProgressBar";
 import Question from "./Question";
 import api from "./utils/api/test";
 
-const useClick = initial => {
+const useStep = initial => {
   const [currentStep, setCurrentStep] = useState(initial);
   const onClickNext = () => {
     setCurrentStep(currentStep + 1);
@@ -19,7 +19,6 @@ const useClick = initial => {
       behavior: "smooth",
     });
   };
-
   const onClickPrev = () => {
     setCurrentStep(cur => {
       window.scrollTo({
@@ -30,35 +29,29 @@ const useClick = initial => {
       else return cur;
     });
   };
-
   return [currentStep, onClickNext, onClickPrev];
 };
 
-const TestPage = () => {
-  const navigate = useNavigate();
-  const { state, dispatch } = useTestState();
-  const [currentStep, onClickNext, onClickPrev] = useClick(0);
-
-  const [list, setLIst] = useState([]);
+const useList = () => {
+  const [questionList, setQuestionList] = useState([]);
   const [questionStep, setQuestionStep] = useState(0);
-  const [answerObj, setAnswerObj] = useState({});
+  const questionRequestSetNumber = 6;
 
-  useEffect(() => {
-    api
-      .getTestQuestion(6)
+  const getTestQuestion = async () => {
+    await api
+      .getTestQuestion(questionRequestSetNumber)
       .then(data => {
-        // dispatch({ type: "SET_QUESTIONS", data: data });
-        setLIst(data);
+        setQuestionList(data);
         setQuestionStep(Math.ceil(data.length / 5));
       })
       .catch(err => console.log(err));
-  }, [dispatch]);
+  };
+  return [questionList, questionStep, getTestQuestion];
+};
 
-  const renderList = useMemo(() => {
-    return list.slice(currentStep * 5, currentStep * 5 + 5);
-  }, [currentStep, list]);
-
-  const onAnswerSelect = (
+const useAnswer = () => {
+  const [answerObj, setAnswerObj] = useState({});
+  const updateAnswerObj = (
     questionNumber,
     answerScore,
     selectedAnswerNumber
@@ -69,26 +62,52 @@ const TestPage = () => {
       return newObj;
     });
   };
-
-  const UsesrAnswerObjToArr = useMemo(() => {
+  const userAnswerArr = useMemo(() => {
     return Object.entries(answerObj);
   }, [answerObj]);
 
+  const answerString = useMemo(() => {
+    return userAnswerArr.map(([key, value]) => `B${key}=${value[0]}`).join(" ");
+  }, [userAnswerArr]);
+  return [updateAnswerObj, answerObj, userAnswerArr, answerString];
+};
+const TestPage = () => {
+  const navigate = useNavigate();
+  const { state, dispatch } = useTestState();
+  const [currentStep, onClickNext, onClickPrev] = useStep(0);
+  const [questionList, questionStep, getTestQuestion] = useList();
+  const [updateAnswerObj, answerObj, userAnswerArr, answerString] = useAnswer();
+  useEffect(() => {
+    getTestQuestion();
+  }, []);
+
+  const renderList = useMemo(() => {
+    return questionList.slice(currentStep * 5, currentStep * 5 + 5);
+  }, [currentStep, questionList]);
+
+  const onAnswerSelect = (
+    questionNumber,
+    answerScore,
+    selectedAnswerNumber
+  ) => {
+    updateAnswerObj(questionNumber, answerScore, selectedAnswerNumber);
+  };
+
   const renderAnswerList = useMemo(() => {
-    const getAnswerList = UsesrAnswerObjToArr.slice(
+    const getAnswerList = userAnswerArr.slice(
       currentStep * 5,
       currentStep * 5 + 5
     );
     const arr = Array(5).fill(null);
     getAnswerList.forEach(e => (arr[e[0] - 1 - currentStep * 5] = e[1][1]));
     return arr;
-  }, [currentStep, UsesrAnswerObjToArr]);
+  }, [currentStep, userAnswerArr]);
 
-  const answerString = useMemo(() => {
-    return UsesrAnswerObjToArr.map(
-      ([key, value]) => `B${key}=${value[0]}`
-    ).join(" ");
-  }, [UsesrAnswerObjToArr]);
+  const progress = useMemo(() => {
+    if (userAnswerArr.length > 0) {
+      return Math.ceil((userAnswerArr.length / questionList.length) * 100);
+    } else return 0;
+  }, [questionList, userAnswerArr]);
 
   const onClickResult = async () => {
     try {
@@ -109,6 +128,7 @@ const TestPage = () => {
 
     navigate("/completed");
   };
+
   const testclick = async () => {
     try {
       await api
@@ -129,11 +149,6 @@ const TestPage = () => {
 
     navigate("/completed");
   };
-  const progress = useMemo(() => {
-    if (UsesrAnswerObjToArr.length > 0) {
-      return Math.ceil((UsesrAnswerObjToArr.length / list.length) * 100);
-    } else return 0;
-  }, [list, UsesrAnswerObjToArr]);
 
   return (
     <STestPageBlock>
@@ -159,7 +174,7 @@ const TestPage = () => {
         ) : (
           <Button
             onClick={onClickResult}
-            disabled={list.length > Object.keys(answerObj).length}
+            disabled={questionList.length > Object.keys(answerObj).length}
           >
             결과보기
           </Button>
