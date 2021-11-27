@@ -12,20 +12,6 @@ const TestCompletedPage = () => {
   const state = useTestState();
   const dispatch = useTestDispatch();
 
-  useEffect(() => {
-    if (state.seq) {
-      api
-        .getTestResult(state.seq)
-        .then(res => {
-          dispatch({ type: "SET_REPORT", data: res.result.wonScore });
-        })
-        .then(res => {
-          setReportData(dispatch, state);
-        })
-        .catch(err => console.log(err));
-    }
-  }, [state.seq, dispatch]);
-
   const onClickResult = () => {
     navigate("/result");
   };

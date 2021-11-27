@@ -9,6 +9,7 @@ import Button from "./Button";
 import ProgressBar from "./ProgressBar";
 import Question from "./Question";
 import api from "./utils/api/test";
+import { setReportData } from "./utils/settingData";
 
 const useClick = initial => {
   const [currentStep, setCurrentStep] = useState(initial);
@@ -101,6 +102,11 @@ const TestPage = () => {
       .then(res => {
         const seq = res.url.split("seq=").pop();
         dispatch({ type: "SET_SEQ", data: seq });
+        return seq;
+      })
+      .then(res => {
+        console.log(res);
+        setReportData(dispatch, state, res);
       })
       .catch(err => {
         console.log(err);
@@ -118,6 +124,11 @@ const TestPage = () => {
       .then(res => {
         const seq = res.url.split("seq=").pop();
         dispatch({ type: "SET_SEQ", data: seq });
+        return seq;
+      })
+      .then(res => {
+        console.log(res);
+        setReportData(dispatch, state, res);
       })
       .catch(err => {
         console.log(err);

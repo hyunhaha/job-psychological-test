@@ -1,10 +1,11 @@
 import api from './api/test';
 
-export const setReportData = async (dispatch, state) => {
-  let report = "";
-  if (state.seq) {
+export const setReportData = async (dispatch, state, seq) => {
+
+  if (state) {
+    let report = "";
     await api
-      .getTestResult(state.seq)
+      .getTestResult(seq)
       .then(res => {
         report = res.result.wonScore;
         dispatch({ type: "SET_REPORT", data: res.result.wonScore });
