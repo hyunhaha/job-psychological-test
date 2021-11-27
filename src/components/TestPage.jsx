@@ -170,7 +170,6 @@ const TestPage = () => {
   );
 };
 const STestPageBlock = styled.div`
-  height: 100%;
   padding: 0 10%;
   text-align: center;
   width: 600px;

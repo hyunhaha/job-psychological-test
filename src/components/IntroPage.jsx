@@ -53,16 +53,13 @@ const IntroPage = props => {
 const SIntroPageBlock = styled.div`
   text-align: center;
   width: 600px;
-  margin: 0 auto;
   height: 100vh;
+  margin: 0 auto;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  .description-item {
-    margin: 0;
-    padding-bottom: 10px;
-  }
 `;
+
 const SDes = styled.p`
   margin: 0;
   padding-bottom: 10px;

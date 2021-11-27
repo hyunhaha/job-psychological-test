@@ -18,7 +18,6 @@ const LandingPage = ({ getStartUserInfo }) => {
 };
 
 const SLandingPageBlock = styled.div`
-  height: 100vh;
   margin: 0 auto;
   box-sizing: border-box;
   .wrap {
