@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { genders } from "../utils/contents";
+import { genders } from "../../utils/contents";
 
 const UserInfoTable = ({ user, date }) => {
   return (

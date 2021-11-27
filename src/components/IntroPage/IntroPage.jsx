@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import Button from "./Button";
-import ProgressBar from "./ProgressBar";
-import Question from "./Question";
-import { introAnswer } from "./utils/contents";
+import Button from "../commons/Button";
+import ProgressBar from "../commons/ProgressBar";
+import Question from "../commons/Question";
+import { introAnswer } from "../../utils/contents";
 
 const IntroPage = props => {
   const navigator = useNavigate();

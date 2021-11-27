@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useTestState } from "../../provider/testProvider";
-import { abilityNames } from "../utils/contents";
+import { abilityNames } from "../../utils/contents";
 
 const TestResultSummary = () => {
   const { state } = useTestState();

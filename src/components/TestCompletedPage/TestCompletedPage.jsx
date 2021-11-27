@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import Button from "../Button";
+import Button from "../commons/Button";
 import TestResultSummary from "./TestResultSummary";
 import { useTestState } from "../../provider/testProvider";
-import { setReportData } from "../utils/settingData";
+import { setReportData } from "../../utils/settingData";
 
 const TestCompletedPage = () => {
   const navigate = useNavigate();

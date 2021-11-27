@@ -2,8 +2,8 @@
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import LandingPage from './components/LandingPage/LandingPage';
-import IntroPage from './components/IntroPage';
-import TestPage from './components/TestPage';
+import IntroPage from './components/IntroPage/IntroPage';
+import TestPage from './components/TestPage/TestPage';
 import TestCompletedPage from './components/TestCompletedPage/TestCompletedPage';
 import TestResultPage from './components/TestResultPage/TestResultPage';
 

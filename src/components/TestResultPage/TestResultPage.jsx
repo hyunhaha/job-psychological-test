@@ -4,8 +4,8 @@ import JobTable from "./JobTable";
 import UserInfoTable from "./UserInfoTable";
 import TestResultChart from "./TestResultChart";
 import styled from "styled-components";
-import Button from "../Button";
-import { educationLevelNames, majorNames } from "../utils/contents";
+import Button from "../commons/Button";
+import { educationLevelNames, majorNames } from "../../utils/contents";
 import { useTestState } from "../../provider/testProvider";
 
 const TestResultPage = () => {
