@@ -5,17 +5,19 @@ const apikey = "5037c661501070d53c880f0f17d6f7fa";
 
 const api = {
   getTestQuestion: async (questionNumber) => {
-    const res = await axios
-      .get(
-        `${baseURL}/questions?apikey=${apikey}&q=${questionNumber}`
-      )
-    if (res?.data.RESULT) {
-      return res.data.RESULT;
+    try {
+      const res = await axios.get(`${baseURL}/questions?apikey=${apikey}&q=${questionNumber}`)
+      if (res.data.ERROR_REASON) {
+        throw new Error(res.data.ERROR_REASON)
+      }
+      return res.data.RESULT
+    } catch (e) {
+      console.error(e.message)
     }
-    throw new Error(res?.data?.ERROR_REASON || "");
   },
+
   submitTestAnswer: async ({ name, gender, startDtm, answers }) => {
-    let data = JSON.stringify({
+    const data = JSON.stringify({
       apikey: apikey,
       qestrnSeq: "6",
       trgetSe: "100209",
@@ -25,7 +27,7 @@ const api = {
       answers,
     });
 
-    let config = {
+    const config = {
       method: "post",
       url: `${baseURL}/report?apikey=${apikey}`,
       headers: {
@@ -34,37 +36,56 @@ const api = {
       data: data,
     };
 
-    return await axios(config)
-      .then(res => {
-        return res.data.RESULT;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    try {
+      const res = await axios(config)
+      if (res.data.ERROR_REASON) {
+        throw new Error(res.data.ERROR_REASON)
+      }
+      return res.data.RESULT
+    } catch (e) {
+      console.error(e.message)
+    }
   },
 
   getTestResult: async (seq) => {
-    const res = await axios.get(`https://www.career.go.kr/inspct/api/psycho/report?seq=${seq}`)
-    if (res?.data.result) {
+    try {
+      const res = await axios.get(`https://www.career.go.kr/inspct/api/psycho/report?seq=${seq}`)
+      if (res?.data.ERROR_REASON) {
+        throw new Error(res.data.ERROR_REASON)
+      }
       return res.data;
+    } catch (e) {
+      console.error(e.message)
     }
-    throw new Error(res?.data?.ERROR_REASON || "");
   },
 
   getMatchEduLevels: async (no1, no2) => {
-    const res = await axios.get(`https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${no1}&no2=${no2}`)
-    if (Array.isArray(res?.data)) {
-      return res.data;
+
+    try {
+      const res = await axios.get(`https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${no1}&no2=${no2}`)
+      if (Array.isArray(res?.data)) {
+        return res.data;
+      }
+      if (res?.data.ERROR_REASON) {
+        throw new Error(res.data.ERROR_REASON)
+      }
+    } catch (e) {
+      console.error(e.message)
     }
-    throw new Error(res?.data?.ERROR_REASON || "");
   },
 
   getMatchMajors: async (no1, no2) => {
-    const res = await axios.get(`https://inspct.career.go.kr/inspct/api/psycho/value/majors?no1=${no1}&no2=${no2}`)
-    if (Array.isArray(res?.data)) {
-      return res.data;
+    try {
+      const res = await axios.get(`https://inspct.career.go.kr/inspct/api/psycho/value/majors?no1=${no1}&no2=${no2}`)
+      if (Array.isArray(res?.data)) {
+        return res.data;
+      }
+      if (res?.data.ERROR_REASON) {
+        throw new Error(res.data.ERROR_REASON)
+      }
+    } catch (e) {
+      console.error(e.message)
     }
-    throw new Error(res?.data?.ERROR_REASON || "");
   }
 }
 
