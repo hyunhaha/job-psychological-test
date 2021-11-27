@@ -16,7 +16,7 @@ const UserForm = () => {
 
   const onChangeName = name => {
     setName(name);
-    if (name < 2 || name > 6) {
+    if (name.length < 2 || name.length > 6) {
       setIsName(false);
       setNameMessage("2글자 이상 6글자 미만으로 이름을 입력해주세요.");
     } else {
