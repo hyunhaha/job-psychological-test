@@ -1,63 +1,91 @@
 import { createContext, useContext, useReducer } from 'react';
 
 const initialState = {
-  questions: { 1: 'hello' },
-  UserAnswer: {}
+  questions: {},
+  userAnswers: { 1: 'hello' },
+  user: {},
+  date: '',
+  seq: '',
+  report: {},
+  reportScore: [],
+  sortedReportScore: [],
+  jobsByEduLevel: [],
+  jobsByMajor: [],
 }
 
-function testReducer(state, action) {
+function reducer(state, action) {
   switch (action.type) {
+    case 'SET_USER':
+      return {
+        ...state,
+        user: action.data
+      };
+    case 'SET_DATE':
+      return {
+        ...state,
+        date: action.data
+      };
+    case 'SET_SEQ':
+      return {
+        ...state,
+        seq: action.data
+      }
     case 'SET_QUESTIONS':
       return {
         ...state,
         questions: action.data
       };
-    // case 'TOGGLE':
-    //   return state.map(todo =>
-    //     todo.id === action.id ? { ...todo, done: !todo.done } : todo
-    //   );
-    // case 'REMOVE':
-    //   return state.filter(todo => todo.id !== action.id);
+    case 'SET_REPORT':
+      return {
+        ...state,
+        report: action.data
+      };
+    case 'SET_REPORT_SCORE':
+      return {
+        ...state,
+        reportScore: action.data
+      };
+    case 'SET_SORTED_REPORT_SCORE':
+      return {
+        ...state,
+        sortedReportScore: action.data
+      };
+    case 'SET_JOBS_EDU':
+      return {
+        ...state,
+        jobsByEduLevel: action.data
+      };
+    case 'SET_JOBS_MAJOR':
+      return {
+        ...state,
+        jobsByMajor: action.data
+      };
+    case 'RESET':
+      return initialState;
+
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
 }
 
 const TestQuestionContext = createContext(null);
-const TestQuestionDispatchContext = createContext(null);
-// const TodoNextIdContext = createContext();
 
 export function TestProvider({ children }) {
-  const [state, dispatch] = useReducer(testReducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
   return (
-    <TestQuestionContext.Provider value={state}>
-      <TestQuestionDispatchContext.Provider value={dispatch}>
-        {children}
-      </TestQuestionDispatchContext.Provider>
+    <TestQuestionContext.Provider value={{ state, dispatch }}>
+      {children}
     </TestQuestionContext.Provider>
   );
 }
 
 export function useTestState() {
-  const state = useContext(TestQuestionContext);
-  if (!state) {
+  const context = useContext(TestQuestionContext);
+  if (!context) {
     throw new Error('Cannot find TodoProvider');
   }
-  return state;
+  return context;
 }
 
-export function useTestDispatch() {
-  const dispatch = useContext(TestQuestionDispatchContext);
-  if (!dispatch) {
-    throw new Error('Cannot find TodoProvider');
-  }
-  return dispatch;
-}
 
-// export function useTodoNextId() {
-//   const context = useContext(TodoNextIdContext);
-//   if (!context) {
-//     throw new Error('Cannot find TodoProvider');
-//   }
-//   return context;
-// }
+

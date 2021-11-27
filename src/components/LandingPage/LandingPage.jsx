@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import UserForm from "./UserForm";
 
@@ -7,7 +7,7 @@ const LandingPage = ({ getStartUserInfo }) => {
     <SLandingPageBlock>
       <div className="wrap">
         <div className="left">
-          <h1>직업 심리 검사</h1>
+          <h1>직업 가치관 검사</h1>
         </div>
         <div className="right">
           <UserForm getStartUserInfo={getStartUserInfo} />
@@ -18,7 +18,6 @@ const LandingPage = ({ getStartUserInfo }) => {
 };
 
 const SLandingPageBlock = styled.div`
-  height: 100vh;
   margin: 0 auto;
   box-sizing: border-box;
   .wrap {
