@@ -36,6 +36,7 @@ const JobTable = ({ partNames, info, title }) => {
                 {items.map((e, i) => (
                   <SLink
                     key={i}
+                    target="_blank"
                     href={`https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=${e[0]}`}
                   >
                     {e[1]}
