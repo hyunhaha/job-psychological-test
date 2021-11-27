@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { useTestState } from "../provider/testProvider";
 import Button from "./Button";
 import ProgressBar from "./ProgressBar";
 import Question from "./Question";
@@ -9,7 +10,10 @@ import { introAnswer } from "./utils/contents";
 const IntroPage = props => {
   const navigator = useNavigate();
   const [answer, setAnswer] = useState(0);
-
+  const { state } = useTestState();
+  useEffect(() => {
+    console.log(state);
+  });
   const onSelect = (q, a) => {
     setAnswer(a);
   };

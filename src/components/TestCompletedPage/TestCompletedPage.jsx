@@ -3,15 +3,15 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import Button from "../Button";
 import TestResultSummary from "./TestResultSummary";
-import api from "../utils/api/test";
-import { useTestDispatch, useTestState } from "../../provider/testProvider";
+import { useTestState } from "../../provider/testProvider";
 import { setReportData } from "../utils/settingData";
 
 const TestCompletedPage = () => {
   const navigate = useNavigate();
-  const state = useTestState();
-  const dispatch = useTestDispatch();
-
+  const { state, dispatch } = useTestState();
+  useEffect(() => {
+    setReportData(dispatch, state);
+  }, []);
   const onClickResult = () => {
     navigate("/result");
   };

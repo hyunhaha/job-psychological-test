@@ -1,11 +1,10 @@
 import api from './api/test';
 
-export const setReportData = async (dispatch, state, seq) => {
-
-  if (state) {
+export const setReportData = async (dispatch, state) => {
+  if (state.seq) {
     let report = "";
     await api
-      .getTestResult(seq)
+      .getTestResult(state.seq)
       .then(res => {
         report = res.result.wonScore;
         dispatch({ type: "SET_REPORT", data: res.result.wonScore });
@@ -20,7 +19,7 @@ export const setReportData = async (dispatch, state, seq) => {
       acc.push({ key, score });
       return acc;
     }, []);
-    dispatch({ type: "SET_REPORT_SCORE", data: resultScore });
+    await dispatch({ type: "SET_REPORT_SCORE", data: resultScore });
 
     const sortedResultScore = [...resultScore].sort((a, b) => {
       if (a.score > b.score) {

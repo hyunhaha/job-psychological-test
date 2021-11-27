@@ -69,33 +69,23 @@ function reducer(state, action) {
 }
 
 const TestQuestionContext = createContext(null);
-const TestQuestionDispatchContext = createContext(null);
-// const TodoNextIdContext = createContext();
 
 export function TestProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
-    <TestQuestionContext.Provider value={state}>
-      <TestQuestionDispatchContext.Provider value={dispatch}>
-        {children}
-      </TestQuestionDispatchContext.Provider>
+    <TestQuestionContext.Provider value={{ state, dispatch }}>
+      {children}
     </TestQuestionContext.Provider>
   );
 }
 
 export function useTestState() {
-  const state = useContext(TestQuestionContext);
-  if (!state) {
+  const context = useContext(TestQuestionContext);
+  if (!context) {
     throw new Error('Cannot find TodoProvider');
   }
-  return state;
+  return context;
 }
 
-export function useTestDispatch() {
-  const dispatch = useContext(TestQuestionDispatchContext);
-  if (!dispatch) {
-    throw new Error('Cannot find TodoProvider');
-  }
-  return dispatch;
-}
+
 

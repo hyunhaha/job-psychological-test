@@ -6,12 +6,11 @@ import TestResultChart from "./TestResultChart";
 import styled from "styled-components";
 import Button from "../Button";
 import { educationLevelNames, majorNames } from "../utils/contents";
-import { useTestDispatch, useTestState } from "../../provider/testProvider";
+import { useTestState } from "../../provider/testProvider";
 
 const TestResultPage = () => {
   const navigate = useNavigate();
-  const state = useTestState();
-  const dispatch = useTestDispatch();
+  const { state, dispatch } = useTestState();
 
   const gotoStart = () => {
     dispatch({ type: "RESET" });

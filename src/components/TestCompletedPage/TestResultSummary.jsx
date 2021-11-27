@@ -4,7 +4,7 @@ import { useTestState } from "../../provider/testProvider";
 import { abilityNames } from "../utils/contents";
 
 const TestResultSummary = () => {
-  const state = useTestState();
+  const { state } = useTestState();
 
   return (
     <div>

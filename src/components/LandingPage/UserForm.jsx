@@ -1,11 +1,11 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { useTestDispatch, useTestState } from "../../provider/testProvider";
+import { useTestState } from "../../provider/testProvider";
 
 const UserForm = () => {
   const navigator = useNavigate();
-  const dispatch = useTestDispatch();
+  const { dispatch } = useTestState();
 
   const [name, setName] = useState("");
   const [isName, setIsName] = useState(false);

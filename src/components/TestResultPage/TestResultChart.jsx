@@ -4,7 +4,7 @@ import { useTestState } from "../../provider/testProvider";
 import TestResultChartBar from "./TestResultChartBar";
 
 const TestResultChart = ({ data }) => {
-  const state = useTestState();
+  const { state } = useTestState();
   const maxScore = useMemo(() => {
     if (Array.isArray(state.reportScore)) {
       return Math.max(...state.reportScore.map(({ score }) => score));
