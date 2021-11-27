@@ -154,7 +154,7 @@ const TestPage = () => {
     <STestPageBlock>
       <SWrap>
         <STitle>검사 진행</STitle>
-        <ProgressBar progress={progress} />
+        <ProgressBar progress={progress} total={questionList.length} />
         {renderList.map((e, i) => (
           <Question
             key={i}

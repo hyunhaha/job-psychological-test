@@ -1,12 +1,12 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
-const ProgressBar = ({ progress }) => {
+const ProgressBar = ({ progress, total }) => {
   return (
     <SProgressBarBlock>
       <SProgressText progress={progress}>{progress}%</SProgressText>
       <SProgressBorder />
-      <SProgressBar progress={progress} />
+      <SProgressBar progress={progress} total={total} />
     </SProgressBarBlock>
   );
 };
@@ -34,11 +34,11 @@ const SProgressBar = styled.div`
   height: 26px;
   background-color: #7d7dcd90;
   border-radius: 10px;
-  animation: ${props => animate(props.progress)} 1s ease-out;
+  animation: ${props => animate(props.progress, props.total)} 0.5s ease-out;
 `;
-const animate = progress => keyframes`
+const animate = (progress, total) => keyframes`
   from{
-    width:${progress - Math.ceil(100 / 28)}%;
+    width:${progress - Math.ceil(100 / total)}%;
   }
   to{
     width:${progress}%;

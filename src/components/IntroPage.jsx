@@ -8,9 +8,13 @@ import { introAnswer } from "./utils/contents";
 
 const IntroPage = props => {
   const navigator = useNavigate();
-  const [answer, setAnswer] = useState(0);
+  const [answer, setAnswer] = useState([]);
   const onSelect = (q, a) => {
-    setAnswer(a);
+    setAnswer(cur => {
+      const newList = [...cur];
+      newList.push([a]);
+      return newList;
+    });
   };
 
   const onClickTestStart = e => {
@@ -18,7 +22,7 @@ const IntroPage = props => {
   };
 
   const progress = useMemo(() => {
-    if (answer !== 0) return 100;
+    if (answer.length !== 0) return 100;
     else return 0;
   }, [answer]);
 
@@ -26,7 +30,7 @@ const IntroPage = props => {
     <SIntroPageBlock>
       <div>
         <STitle>검사예시</STitle>
-        <ProgressBar progress={progress} />
+        <ProgressBar progress={progress} total={answer.length} />
         <div>
           <SDes>
             직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에
@@ -38,7 +42,7 @@ const IntroPage = props => {
           </SDes>
         </div>
         <Question data={introAnswer} onSelect={onSelect} />
-        <Button onClick={onClickTestStart} disabled={answer === 0}>
+        <Button onClick={onClickTestStart} disabled={answer.length === 0}>
           검사 시작하기
         </Button>
       </div>
