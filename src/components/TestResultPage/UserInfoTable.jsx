@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { genders } from "../utils/contents";
 
 const UserInfoTable = ({ user, date }) => {
   return (
@@ -13,7 +14,10 @@ const UserInfoTable = ({ user, date }) => {
       </thead>
       <tbody>
         <tr>
-          {user && Object.values(user).map((e, i) => <td key={i}>{e}</td>)}
+          {user &&
+            Object.values(user).map((e, i) => (
+              <td key={i}>{i === 1 ? genders[e] : e}</td>
+            ))}
           <td>{date && date.toLocaleDateString()}</td>
         </tr>
       </tbody>
