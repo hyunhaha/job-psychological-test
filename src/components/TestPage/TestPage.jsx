@@ -10,7 +10,7 @@ import ProgressBar from "../commons/ProgressBar";
 import Question from "../commons/Question";
 import api from "../../utils/api";
 
-const TestPage = () => {
+const TestPage = props => {
   const navigate = useNavigate();
   const { state, dispatch } = useTestState();
   const [currentStep, onClickNext, onClickPrev] = useStep(0);

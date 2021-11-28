@@ -8,7 +8,7 @@ import Button from "../commons/Button";
 import { educationLevelNames, majorNames } from "../../utils/contents";
 import { useTestState } from "../../provider/testProvider";
 
-const TestResultPage = () => {
+const TestResultPage = props => {
   const navigate = useNavigate();
   const { state, dispatch } = useTestState();
 

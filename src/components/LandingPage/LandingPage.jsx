@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import UserForm from "./UserForm";
 
-const LandingPage = ({ getStartUserInfo }) => {
+const LandingPage = props => {
   return (
     <SLandingPageBlock>
       <SWrap>
@@ -10,7 +10,7 @@ const LandingPage = ({ getStartUserInfo }) => {
           <h1>직업 가치관 검사</h1>
         </SPart>
         <SPart>
-          <UserForm getStartUserInfo={getStartUserInfo} />
+          <UserForm />
         </SPart>
       </SWrap>
     </SLandingPageBlock>

@@ -5,7 +5,7 @@ import { useTestState } from "../../provider/testProvider";
 import UserGender from "./UserGender";
 import UserName from "./UserName";
 
-const UserForm = () => {
+const UserForm = props => {
   const navigator = useNavigate();
   const { dispatch } = useTestState();
 

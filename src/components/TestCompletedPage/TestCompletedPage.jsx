@@ -6,7 +6,7 @@ import TestResultSummary from "./TestResultSummary";
 import { useTestState } from "../../provider/testProvider";
 import { setReportData } from "../../utils/settingData";
 
-const TestCompletedPage = () => {
+const TestCompletedPage = props => {
   const navigate = useNavigate();
   const { state, dispatch } = useTestState();
   useEffect(() => {

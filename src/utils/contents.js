@@ -5,6 +5,7 @@ export const educationLevelNames = {
   4: "대졸",
   5: "대학원졸",
 };
+
 export const majorNames = {
   0: "계열무관",
   1: "인문",
@@ -15,6 +16,7 @@ export const majorNames = {
   6: "의학",
   7: "예체능",
 };
+
 export const genders = {
   100323: "남성",
   100324: "여성",
