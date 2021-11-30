@@ -1,21 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import Button from "../commons/Button";
 import TestResultSummary from "./TestResultSummary";
-import { useTestState } from "../../provider/testProvider";
-import { setReportData } from "../../utils/settingData";
+import { useSetData } from "../../utils/settingData";
 import Loading from "../commons/Loading";
 
 const TestCompletedPage = props => {
   const navigate = useNavigate();
-  const { state, dispatch } = useTestState();
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(true);
-    setReportData(dispatch, state);
-    setLoading(false);
-  }, []);
+  const { isLoading } = useSetData();
   const onClickResult = () => {
     navigate("/result");
   };
@@ -29,8 +22,7 @@ const TestCompletedPage = props => {
           생각하는지를 알려주고, 중요 가치를 충족시켜줄 수 있는 직업에 대해
           생각해 볼 기회를 제공합니다.
         </p>
-        {/* {loading ? <Loading /> : <TestResultSummary />} */}
-        {loading ? <Loading /> : <div>{state.user.name}</div>}
+        {isLoading ? <Loading /> : <TestResultSummary />}
         <Button disabled={false} onClick={onClickResult}>
           결과보기
         </Button>
