@@ -6,7 +6,7 @@ const initialState = {
   user: {},
   date: '',
   seq: '',
-  report: {},
+  report: '',
   reportScore: [],
   sortedReportScore: [],
   jobsByEduLevel: [],

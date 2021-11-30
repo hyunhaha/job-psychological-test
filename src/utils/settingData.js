@@ -1,14 +1,17 @@
+import { useQuery } from 'react-query';
+import { useTestState } from '../provider/testProvider';
 import api from './api';
-
-export const setReportData = async (dispatch, state) => {
-  if (state.seq) {
+export const useSetData = () => {
+  const { state, dispatch } = useTestState();
+  return useQuery('setData', async () => {
     let report = "";
     await api
       .getTestResult(state.seq)
       .then(res => {
         report = res.result.wonScore;
+        console.log(state)
         dispatch({ type: "SET_REPORT", data: res.result.wonScore });
-
+        console.log(state)
       })
       .catch(err => console.log(err));
 
@@ -19,7 +22,8 @@ export const setReportData = async (dispatch, state) => {
       acc.push({ key, score });
       return acc;
     }, []);
-    await dispatch({ type: "SET_REPORT_SCORE", data: resultScore });
+    console.log(state)
+    dispatch({ type: "SET_REPORT_SCORE", data: resultScore });
 
     const sortedResultScore = [...resultScore].sort((a, b) => {
       if (a.score > b.score) {
@@ -36,7 +40,7 @@ export const setReportData = async (dispatch, state) => {
         return 1;
       }
     });
-    await dispatch({ type: "SET_SORTED_REPORT_SCORE", data: sortedResultScore });
+    dispatch({ type: "SET_SORTED_REPORT_SCORE", data: sortedResultScore });
 
     if (sortedResultScore.length !== 0) {
       const no1 = sortedResultScore[0].key;
@@ -54,5 +58,5 @@ export const setReportData = async (dispatch, state) => {
         })
         .catch(err => console.log(err));
     }
-  }
+  })
 };
