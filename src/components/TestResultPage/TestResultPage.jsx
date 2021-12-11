@@ -7,6 +7,7 @@ import styled from "styled-components";
 import Button from "../commons/Button";
 import { educationLevelNames, majorNames } from "../../utils/contents";
 import { useTestState } from "../../provider/testProvider";
+import { BREAK_POINT_MOBILE } from "../../utils/responsiveSize";
 
 const TestResultPage = props => {
   const navigate = useNavigate();
@@ -57,10 +58,14 @@ const TestResultPage = props => {
 
 const STestResultPageBlock = styled.div`
   height: 100%;
-  padding: 0 10%;
+  padding: 0 20px;
+  box-sizing: border-box;
   text-align: center;
-  width: 600px;
+  width: 100%;
   margin: 0 auto;
+  @media only screen and (min-width: ${BREAK_POINT_MOBILE}px) {
+    width: 600px;
+  }
 `;
 const SWrap = styled.div`
   padding: 50px 0;

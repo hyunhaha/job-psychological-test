@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
+import { BREAK_POINT_MOBILE } from "../../utils/responsiveSize";
 
 const ProgressBar = ({ progress, total }) => {
   return (
@@ -17,9 +18,13 @@ const SProgressBarBlock = styled.div`
 `;
 const SProgressText = styled.div`
   position: absolute;
-  right: 48%;
+  right: 43%;
   bottom: 30%;
   color: ${props => (props.progress < 50 ? "black" : "white")};
+
+  @media only screen and (min-width: ${BREAK_POINT_MOBILE}px) {
+    right: 48%;
+  }
 `;
 const SProgressBorder = styled.div`
   position: absolute;

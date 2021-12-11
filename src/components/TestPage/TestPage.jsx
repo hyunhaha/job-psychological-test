@@ -9,6 +9,7 @@ import { useAnswer, useList, useStep } from "../hooks/testPagehook";
 import ProgressBar from "../commons/ProgressBar";
 import Question from "../commons/Question";
 import api from "../../utils/api";
+import { BREAK_POINT_MOBILE } from "../../utils/responsiveSize";
 
 const TestPage = props => {
   const navigate = useNavigate();
@@ -125,8 +126,16 @@ const TestPage = props => {
 const STestPageBlock = styled.div`
   padding: 0 10%;
   text-align: center;
-  width: 600px;
+  width: 100%;
+  padding: 20px;
   margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media only screen and (min-width: ${BREAK_POINT_MOBILE}px) {
+    width: 600px;
+  }
 `;
 const SWrap = styled.div`
   padding: 50px 0;

@@ -39,7 +39,7 @@ const SUserNameInput = styled.input`
 const SAlert = styled.div`
 visibility:${props => (props.isDisplay ? "hidden" : "visible")};
   color: #8698e7;
-  font-size: 14px;
+  font-size: 12px;
   text-align: left;
 }`;
 

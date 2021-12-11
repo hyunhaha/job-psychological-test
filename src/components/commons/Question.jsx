@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import {
+  BREAK_POINT_MOBILE,
+  BREAK_POINT_PC,
+  BREAK_POINT_TABLET,
+} from "../../utils/responsiveSize";
 
 const Question = ({ data, onSelect, renderAnswer }) => {
   const {
@@ -78,8 +83,14 @@ const SAnswerButton = styled.button`
   box-sizing: border-box;
   border: none;
   background-color: white;
-  &:nth-child(1) {
-    margin-right: 10px;
+  & + & {
+    margin-top: 10px;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_MOBILE}px) {
+    & + & {
+      margin-top: 0;
+      margin-left: 10px;
+    }
   }
 `;
 const SQuestionNumber = styled.span`
@@ -97,6 +108,10 @@ const SQuestion = styled.h3`
 const SAnswerSet = styled.div`
   padding: 10px;
   display: flex;
+  flex-direction: column;
+  @media only screen and (min-width: ${BREAK_POINT_MOBILE}px) {
+    flex-direction: row;
+  }
 `;
 const SButtonSpanHead = styled.span`
   display: inline-block;
@@ -104,6 +119,7 @@ const SButtonSpanHead = styled.span`
   padding: 10px 0;
   margin: 0;
   color: inherit;
+  width: 100%;
 `;
 const SButtonSpan = styled.span`
   display: inline-block;
