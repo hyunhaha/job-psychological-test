@@ -5,6 +5,11 @@ import Button from "../commons/Button";
 import ProgressBar from "../commons/ProgressBar";
 import Question from "../commons/Question";
 import { introAnswer } from "../../utils/contents";
+import {
+  BREAK_POINT_MOBILE,
+  BREAK_POINT_PC,
+  BREAK_POINT_TABLET,
+} from "../../utils/responsiveSize";
 
 const IntroPage = props => {
   const navigator = useNavigate();
@@ -49,14 +54,21 @@ const IntroPage = props => {
     </SIntroPageBlock>
   );
 };
+
 const SIntroPageBlock = styled.div`
   text-align: center;
-  width: 600px;
+  width: 100%;
   height: 100vh;
+  padding: 20px;
   margin: 0 auto;
   box-sizing: border-box;
   display: flex;
+  justify-content: center;
   align-items: center;
+
+  @media only screen and (min-width: ${BREAK_POINT_PC}px) {
+    width: 600px;
+  }
 `;
 
 const SDes = styled.p`

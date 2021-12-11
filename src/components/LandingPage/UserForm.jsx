@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { useTestState } from "../../provider/testProvider";
+import { BREAK_POINT_MOBILE } from "../../utils/responsiveSize";
 import UserGender from "./UserGender";
 import UserName from "./UserName";
 
@@ -56,7 +57,7 @@ const UserForm = props => {
   );
 };
 const SUserForm = styled.div`
-  width: 400px;
+  width: 300px;
   margin: 0 auto;
   background-color: #ffffff70;
   padding: 8%;
@@ -67,6 +68,7 @@ const STitle = styled.h4`
   margin: 0;
   padding: 20px 0;
   text-align: left;
+  text-align: center;
 `;
 const SStartButton = styled.button`
   width: 100%;

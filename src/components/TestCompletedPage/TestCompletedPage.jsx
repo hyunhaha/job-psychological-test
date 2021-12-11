@@ -32,7 +32,9 @@ const TestCompletedPage = props => {
 };
 const STestCompletedBlock = styled.div`
   text-align: center;
-  width: 600px;
+  // width: 600px;
+  width: 100%;
+  padding: 0 20px;
   margin: 0 auto;
   height: 100vh;
   box-sizing: border-box;
