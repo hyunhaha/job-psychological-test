@@ -8,11 +8,14 @@ import Button from "../commons/Button";
 import { educationLevelNames, majorNames } from "../../utils/contents";
 import { useTestState } from "../../provider/testProvider";
 import { BREAK_POINT_MOBILE } from "../../utils/responsiveSize";
+import { useRecoilValue } from "recoil";
+import { testDate, userState } from "../../atoms/atoms";
 
 const TestResultPage = props => {
   const navigate = useNavigate();
   const { state, dispatch } = useTestState();
-
+  const user = useRecoilValue(userState);
+  const date = useRecoilValue(testDate);
   const gotoStart = () => {
     dispatch({ type: "RESET" });
     navigate("/");
@@ -30,7 +33,7 @@ const TestResultPage = props => {
             알려줍니다. 또한 본인이 가장 중요하게 생각하는 가치를 충족시켜줄 수
             있는 직업에 대해 생각해 볼 기회를 제공합니다.
           </SText>
-          <UserInfoTable user={state.user} date={state.date} />
+          <UserInfoTable user={user} date={date} />
         </SPartWrap>
 
         <SPartWrap>

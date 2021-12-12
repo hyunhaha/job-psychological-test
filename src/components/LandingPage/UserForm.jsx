@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { testDate, userState } from "../../atoms/atoms";
 import { useTestState } from "../../provider/testProvider";
 import UserGender from "./UserGender";
 import UserName from "./UserName";
 
 const UserForm = props => {
+  const setUser = useSetRecoilState(userState);
+  const setTestDate = useSetRecoilState(testDate);
   const navigator = useNavigate();
   const { dispatch } = useTestState();
 
@@ -31,6 +35,13 @@ const UserForm = props => {
   const onclickStart = e => {
     e.preventDefault();
     const startDtm = new Date();
+    setUser(cur => {
+      const newobj = { ...cur };
+      newobj["name"] = name;
+      newobj["gender"] = gender;
+      return newobj;
+    });
+    setTestDate(startDtm);
     dispatch({ type: "SET_USER", data: { name, gender } });
     dispatch({ type: "SET_DATE", data: startDtm });
     navigator("/intro");

@@ -1,15 +1,21 @@
 import React from "react";
+import { useEffect } from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { userState } from "../../atoms/atoms";
 import { useTestState } from "../../provider/testProvider";
 import { abilityNames } from "../../utils/contents";
 
 const TestResultSummary = props => {
   const { state } = useTestState();
-
+  const user = useRecoilValue(userState);
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
   return (
     <div>
       <SResult>
-        <SHighlight>{state.user.name ? state.user.name : "사용자"}</SHighlight>
+        <SHighlight>{user.name}</SHighlight>
         님는{" "}
         <SHighlight>
           {state.sortedReportScore.length !== 0 &&
