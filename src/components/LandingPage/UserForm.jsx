@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { useTestState } from "../../provider/testProvider";
-import { BREAK_POINT_MOBILE } from "../../utils/responsiveSize";
 import UserGender from "./UserGender";
 import UserName from "./UserName";
 

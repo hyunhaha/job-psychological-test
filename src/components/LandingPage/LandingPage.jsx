@@ -1,10 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  BREAK_POINT_MOBILE,
-  BREAK_POINT_PC,
-  BREAK_POINT_TABLET,
-} from "../../utils/responsiveSize";
+import { BREAK_POINT_TABLET } from "../../utils/responsiveSize";
 import UserForm from "./UserForm";
 
 const LandingPage = props => {

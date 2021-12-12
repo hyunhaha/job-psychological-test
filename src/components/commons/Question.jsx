@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { memo } from "react";
 import styled from "styled-components";
-import {
-  BREAK_POINT_MOBILE,
-  BREAK_POINT_PC,
-  BREAK_POINT_TABLET,
-} from "../../utils/responsiveSize";
+import { BREAK_POINT_MOBILE } from "../../utils/responsiveSize";
 
 const Question = ({ data, onSelect, renderAnswer }) => {
   const {
@@ -93,7 +90,7 @@ const SAnswerButton = styled.button`
     }
   }
 `;
-const SQuestionNumber = styled.span`
+const SQuestionNumber = memo(styled.span`
   position: absolute;
   top: 10px;
   left: 10px;
@@ -101,10 +98,10 @@ const SQuestionNumber = styled.span`
   border-radius: 4px;
   background-color: #f1f1f1;
   color: #8f8f8f;
-`;
-const SQuestion = styled.h3`
+`);
+const SQuestion = memo(styled.h3`
   font-weight: normal;
-`;
+`);
 const SAnswerSet = styled.div`
   padding: 10px;
   display: flex;
@@ -113,16 +110,16 @@ const SAnswerSet = styled.div`
     flex-direction: row;
   }
 `;
-const SButtonSpanHead = styled.span`
+const SButtonSpanHead = memo(styled.span`
   display: inline-block;
   font-weight: bold;
   padding: 10px 0;
   margin: 0;
   color: inherit;
   width: 100%;
-`;
-const SButtonSpan = styled.span`
+`);
+const SButtonSpan = memo(styled.span`
   display: inline-block;
   padding: 0 20px 10px;
-`;
+`);
 export default Question;

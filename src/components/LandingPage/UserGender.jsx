@@ -5,7 +5,7 @@ const UserGender = ({ onChangeGender, gender }) => (
   <SGenderBlock>
     <SRadiosWrap>
       <SRadioWrap>
-        <SRadioInput
+        <input
           type="radio"
           id="female"
           name="sex"
@@ -15,7 +15,7 @@ const UserGender = ({ onChangeGender, gender }) => (
         <label htmlFor="female">여자</label>
       </SRadioWrap>
       <SRadioWrap>
-        <SRadioInput
+        <input
           type="radio"
           id="male"
           name="sex"
@@ -43,7 +43,7 @@ const SRadioWrap = styled.div`
   flex: 1 1 0%;
   text-align: center;
 `;
-const SRadioInput = styled.input``;
+
 const SAlert = styled.div`
 visibility:${props => (props.isDisplay ? "hidden" : "visible")};
   color: #8698e7;

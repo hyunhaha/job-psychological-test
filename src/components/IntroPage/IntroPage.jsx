@@ -5,11 +5,8 @@ import Button from "../commons/Button";
 import ProgressBar from "../commons/ProgressBar";
 import Question from "../commons/Question";
 import { introAnswer } from "../../utils/contents";
-import {
-  BREAK_POINT_MOBILE,
-  BREAK_POINT_PC,
-  BREAK_POINT_TABLET,
-} from "../../utils/responsiveSize";
+import { BREAK_POINT_PC } from "../../utils/responsiveSize";
+import { memo } from "react";
 
 const IntroPage = props => {
   const navigator = useNavigate();
@@ -71,12 +68,12 @@ const SIntroPageBlock = styled.div`
   }
 `;
 
-const SDes = styled.p`
+const SDes = memo(styled.p`
   margin: 0;
   padding-bottom: 10px;
-`;
-const STitle = styled.h1`
+`);
+const STitle = memo(styled.h1`
   margin: 0;
   padding: 20px 0;
-`;
+`);
 export default IntroPage;

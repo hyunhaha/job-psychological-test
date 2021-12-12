@@ -10,6 +10,7 @@ import ProgressBar from "../commons/ProgressBar";
 import Question from "../commons/Question";
 import api from "../../utils/api";
 import { BREAK_POINT_MOBILE } from "../../utils/responsiveSize";
+import { memo } from "react";
 
 const TestPage = props => {
   const navigate = useNavigate();
@@ -137,12 +138,12 @@ const STestPageBlock = styled.div`
     width: 600px;
   }
 `;
-const SWrap = styled.div`
+const SWrap = memo(styled.div`
   padding: 50px 0;
-`;
-const STitle = styled.h2`
+`);
+const STitle = memo(styled.h2`
   margin: 0;
   padding: 10px 0;
-`;
+`);
 
 export default TestPage;
