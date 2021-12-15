@@ -1,25 +1,22 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
-import { useTestState } from "../../provider/testProvider";
 import TestResultChartBar from "./TestResultChartBar";
 
-const TestResultChart = ({ data }) => {
-  const { state } = useTestState();
+const TestResultChart = ({ info }) => {
   const maxScore = useMemo(() => {
-    if (Array.isArray(state.reportScore)) {
-      return Math.max(...state.reportScore.map(({ score }) => score));
+    if (Array.isArray(info)) {
+      return Math.max(...info.map(({ score }) => score));
     }
     return 1;
-  }, [state.reportScore]);
+  }, [info]);
 
   return (
     <SChartBlock>
       <SHeighstock />
       <SBarWrap>
-        {state.reportScore &&
-          state.reportScore.map((e, i) => (
-            <TestResultChartBar key={i} value={e} maxScore={maxScore} />
-          ))}
+        {info.map((e, i) => (
+          <TestResultChartBar key={i} value={e} maxScore={maxScore} />
+        ))}
       </SBarWrap>
     </SChartBlock>
   );

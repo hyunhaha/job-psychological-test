@@ -81,6 +81,7 @@ const TestPage = props => {
         })
         .then(res => {
           const seq = res.url.split("seq=").pop();
+          console.log(seq);
           dispatch({ type: "SET_SEQ", data: seq });
           return seq;
         });

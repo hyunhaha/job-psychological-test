@@ -9,13 +9,22 @@ import { educationLevelNames, majorNames } from "../../utils/contents";
 import { useTestState } from "../../provider/testProvider";
 import { BREAK_POINT_MOBILE } from "../../utils/responsiveSize";
 import { useRecoilValue } from "recoil";
-import { testDate, userState } from "../../atoms/atoms";
+import {
+  testDate,
+  userState,
+  jobsByEduLevel,
+  jobsByMajor,
+  resultScore,
+} from "../../atoms/atoms";
 
 const TestResultPage = props => {
   const navigate = useNavigate();
   const { state, dispatch } = useTestState();
   const user = useRecoilValue(userState);
   const date = useRecoilValue(testDate);
+  const result = useRecoilValue(resultScore);
+  const edu = useRecoilValue(jobsByEduLevel);
+  const major = useRecoilValue(jobsByMajor);
   const gotoStart = () => {
     dispatch({ type: "RESET" });
     navigate("/");
@@ -38,18 +47,18 @@ const TestResultPage = props => {
 
         <SPartWrap>
           <h2>직업가치관 결과</h2>
-          <TestResultChart />
+          <TestResultChart info={result} />
         </SPartWrap>
 
         <JobTable
           partNames={educationLevelNames}
-          info={state.jobsByEduLevel}
+          info={edu}
           title={"종사자 평균 학력별"}
         />
 
         <JobTable
           partNames={majorNames}
-          info={state.jobsByMajor}
+          info={major}
           title={"종사자 평균 전공별"}
         />
 
