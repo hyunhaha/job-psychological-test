@@ -6,27 +6,42 @@ import TestResultChart from "./TestResultChart";
 import styled from "styled-components";
 import Button from "../commons/Button";
 import { educationLevelNames, majorNames } from "../../utils/contents";
-import { useTestState } from "../../provider/testProvider";
 import { BREAK_POINT_MOBILE } from "../../utils/responsiveSize";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import {
   testDate,
   userState,
   jobsByEduLevel,
   jobsByMajor,
   resultScore,
+  report,
 } from "../../atoms/atoms";
+const useResetStore = () => {
+  const resetUser = useResetRecoilState(userState);
+  const resetDate = useResetRecoilState(testDate);
+  const resetReport = useResetRecoilState(report);
+  const resetEdu = useResetRecoilState(jobsByEduLevel);
+  const resetMajor = useResetRecoilState(jobsByMajor);
+  const resetData = () => {
+    resetUser();
+    resetDate();
+    resetReport();
+    resetEdu();
+    resetMajor();
+  };
+  return resetData;
+};
 
 const TestResultPage = props => {
   const navigate = useNavigate();
-  const { state, dispatch } = useTestState();
   const user = useRecoilValue(userState);
   const date = useRecoilValue(testDate);
   const result = useRecoilValue(resultScore);
   const edu = useRecoilValue(jobsByEduLevel);
   const major = useRecoilValue(jobsByMajor);
+  const resetData = useResetStore();
   const gotoStart = () => {
-    dispatch({ type: "RESET" });
+    resetData();
     navigate("/");
   };
   return (
