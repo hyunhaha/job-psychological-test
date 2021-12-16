@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -11,9 +11,7 @@ ReactDOM.render(
     <BrowserRouter>
       <TestProvider>
         <RecoilRoot>
-          <Suspense fallback={<div>Loading...</div>}>
-            <App />
-          </Suspense>
+          <App />
         </RecoilRoot>
       </TestProvider>
     </BrowserRouter>

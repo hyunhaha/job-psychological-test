@@ -3,7 +3,6 @@ import { useMemo } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { useTestState } from "../../provider/testProvider";
 import Button from "../commons/Button";
 import { useAnswer, useList, useStep } from "../hooks/testPagehook";
 import ProgressBar from "../commons/ProgressBar";
@@ -11,13 +10,16 @@ import Question from "../commons/Question";
 import api from "../../utils/api";
 import { BREAK_POINT_MOBILE } from "../../utils/responsiveSize";
 import { memo } from "react";
+import { useRecoilValue } from "recoil";
+import { testDate, userState } from "../../atoms/atoms";
 
 const TestPage = props => {
   const navigate = useNavigate();
-  const { state, dispatch } = useTestState();
   const [currentStep, onClickNext, onClickPrev] = useStep(0);
   const [questionList, questionStep, getTestQuestion] = useList();
   const [updateAnswerObj, answerObj, userAnswerArr, answerString] = useAnswer();
+  const user = useRecoilValue(userState);
+  const date = useRecoilValue(testDate);
   useEffect(() => {
     getTestQuestion();
   }, []);
@@ -51,46 +53,48 @@ const TestPage = props => {
   }, [questionList, userAnswerArr]);
 
   const onClickResult = async () => {
+    let seq = null;
     try {
-      await api
+      seq = await api
         .submitTestAnswer({
-          ...state.user,
-          startDtm: state.date,
+          ...user,
+          startDtm: date,
           answers: answerString,
         })
         .then(res => {
           const seq = res.url.split("seq=").pop();
-          dispatch({ type: "SET_SEQ", data: seq });
           return seq;
         });
     } catch (error) {
       console.log(error);
     }
-
-    navigate("/completed");
+    if (seq !== null) {
+      navigate("/completed", { state: { seq } });
+    }
   };
 
   const onClickResulttest = async () => {
+    let seq = null;
     try {
-      await api
+      seq = await api
         .submitTestAnswer({
-          ...state.user,
-          startDtm: state.date,
+          ...user,
+          startDtm: date,
           answers:
             "B1=1 B2=3 B3=5 B4=7 B5=9 B6=11 B7=13 B8=15 B9=17 B10=19 B11=21 B12=23 B13=25 B14=27 B15=29 B16=31 B17=33 B18=35 B19=37 B20=39 B21=41 B22=43 B23=45 B24=47 B25=49 B26=51 B27=53 B28=55",
         })
         .then(res => {
           const seq = res.url.split("seq=").pop();
-          console.log(seq);
-          dispatch({ type: "SET_SEQ", data: seq });
           return seq;
         });
     } catch (error) {
       console.log(error);
     }
-
-    navigate("/completed");
+    if (seq !== null) {
+      navigate("/completed", { state: { seq } });
+    }
   };
+
   return (
     <STestPageBlock>
       <SWrap>

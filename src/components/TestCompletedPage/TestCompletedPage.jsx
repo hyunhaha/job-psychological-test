@@ -1,14 +1,17 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import styled from "styled-components";
 import Button from "../commons/Button";
 import TestResultSummary from "./TestResultSummary";
-import { useSetData } from "../../utils/settingData";
+import { useSetJobData, useSetReport } from "../../utils/settingData";
 import Loading from "../commons/Loading";
 
 const TestCompletedPage = props => {
   const navigate = useNavigate();
-  const { isLoading } = useSetData();
+  const { state } = useLocation();
+  const { isLoading: reportLoading } = useSetReport(state.seq);
+  const { isLoading: jobDataLoading } = useSetJobData();
+
   const onClickResult = () => {
     navigate("/result");
   };
@@ -22,7 +25,7 @@ const TestCompletedPage = props => {
           생각하는지를 알려주고, 중요 가치를 충족시켜줄 수 있는 직업에 대해
           생각해 볼 기회를 제공합니다.
         </p>
-        {isLoading ? <Loading /> : <TestResultSummary />}
+        {jobDataLoading || reportLoading ? <Loading /> : <TestResultSummary />}
         <Button disabled={false} onClick={onClickResult}>
           결과보기
         </Button>
